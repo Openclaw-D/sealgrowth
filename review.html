@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>自带密钥评审工具 · 海豹增长 SEAL Growth</title>
+<meta name="description" content="填一份速查表，用你自己的模型（DeepSeek、通义千问、Kimi、Claude 等）按海豹增长的开源方法 V3 跑一次评审；或零接口：复制提示词到任意对话模型。密钥只留在你的浏览器。">
+<meta property="og:title" content="自带密钥评审工具 · 海豹增长">
+<meta property="og:description" content="用你自己的模型，跑同一套开源评审方法。密钥与输入不经过本站。">
+<meta property="og:image" content="assets/seal-mark-512.png">
+<meta name="theme-color" content="#1f1f1f">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" type="image/png" href="assets/seal-mark-192.png">
+<link rel="apple-touch-icon" href="assets/seal-mark-192.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="海豹增长 首页">
+      <img src="assets/seal-mark-192.png" alt="" width="36" height="36">
+      <b>海豹增长</b><span class="en">SEAL Growth</span>
+    </a>
+    <nav aria-label="站内">
+      <ul>
+        <li><a href="method.html">方法</a></li>
+        <li><a href="review.html" aria-current="page">评审</a></li>
+        <li><a href="index.html#contact">联系</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="page-head" aria-labelledby="h-review">
+  <div class="wrap">
+    <div>
+      <div class="en eyebrow">Tool · bring your own key · V1</div>
+      <h1 id="h-review">用你自己的模型，<br>跑同一套方法</h1>
+    </div>
+    <div>
+      <p class="lede">填一份速查表（5 到 10 分钟），然后二选一：在浏览器里用你自己的密钥直接调用模型服务商，或者把提示词复制到任意对话模型，再把结果贴回来。输出是六维归档建议、关键前提、关卡状态和"下一步要证明什么"，按<a href="method.html"><u>开源方法 V3</u></a>。</p>
+      <dl class="kv" style="margin-top:14px">
+        <dt>密钥</dt><dd>只存在你浏览器的内存里，刷新即忘；本站没有服务器，收不到任何内容。</dd>
+        <dt>输入</dt><dd>只发给你选择的模型服务商；用零接口方式则只发给你粘贴到的对话产品。</dd>
+        <dt>代码</dt><dd>本页全部逻辑在 <code>assets/review.js</code>，开源，可查可改。</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section aria-label="评审工具" style="padding-top:36px">
+  <div class="wrap">
+    <div class="banner">AI 辅助自评，未经独立核验，不代表海豹增长背书，不构成投资建议，不承诺融资或收益。请用代号代替公司名，不要填联系人信息，不要粘贴合同或客户名单原文。</div>
+
+    <div class="tool">
+      <!-- 左：速查表 -->
+      <form id="sheet" class="main" novalidate>
+        <div class="card">
+          <h3>一、情境</h3>
+          <p class="hint">变动层：决定查什么、合格线在哪，不改框架。</p>
+          <div class="two">
+            <div class="field"><label for="f-name">公司代号</label><input type="text" id="f-name" name="name" placeholder="如：公司甲" autocomplete="off"></div>
+            <div class="field"><label for="f-track">赛道一句话</label><input type="text" id="f-track" name="track" placeholder="做什么、卖给谁" autocomplete="off"></div>
+          </div>
+          <div class="field"><span class="lab">阶段</span><div class="seg" data-name="stage"></div></div>
+          <div class="field"><span class="lab">行业</span><div class="seg" data-name="industry"></div></div>
+          <div class="two">
+            <div class="field"><span class="lab">创始人背景</span><div class="seg" data-name="founder"></div></div>
+            <div class="field"><span class="lab">商业模式</span><div class="seg" data-name="model"></div></div>
+          </div>
+          <div class="field"><span class="lab">合规敏感点</span><div class="seg" data-name="compliance"></div></div>
+          <div class="two">
+            <div class="field"><label for="f-team">团队</label><input type="text" id="f-team" name="team" placeholder="全职几人，关键缺口" autocomplete="off"></div>
+            <div class="field"><label for="f-round">本轮</label><input type="text" id="f-round" name="round" placeholder="金额 · 估值 · 出让 · 用途占比" autocomplete="off"></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3>二、六维</h3>
+          <p class="hint">固定层。每行选一档（可以不选，让模型建议），证据写一句并注明来源。锚点原文折在每行下面。</p>
+          <div id="axes"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3>三、关卡</h3>
+          <p class="hint">不计分。只有核实的证据才算阻断；未核查就写未核查。</p>
+          <div id="gates"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3>四、关键前提</h3>
+          <p class="hint">这个项目成立必须为真的 2 到 3 件事，至少一条标为关键。</p>
+          <div id="premises"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3>五、笔记与材料</h3>
+          <div class="field"><label for="f-notes">笔记</label><textarea id="f-notes" name="notes" maxlength="600" placeholder="直觉、担心、听到的、没写进上面的；300 字内"></textarea></div>
+          <div class="field"><label for="f-materials">手头材料</label><textarea id="f-materials" name="materials" maxlength="400" placeholder="只写文件名或类型，不贴内容"></textarea></div>
+          <div class="field"><span class="lab">量化（可选，单位自写）</span>
+            <div class="two">
+              <input type="text" name="q_round" placeholder="本轮金额 / 投前估值 / 出让" autocomplete="off">
+              <input type="text" name="q_ops" placeholder="近 12 月营收 / 毛利率 / 付费客户数" autocomplete="off">
+              <input type="text" name="q_cash" placeholder="现金余额 / 月支出" autocomplete="off">
+              <input type="text" name="q_next" placeholder="下个里程碑（几个月后、是什么）" autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn small" id="btn-sample">填入合成样例</button>
+          <button type="button" class="btn small" id="btn-clear">清空</button>
+          <button type="button" class="btn small" id="btn-copy-sheet">复制速查表 (Markdown)</button>
+        </div>
+      </form>
+
+      <!-- 右：运行 -->
+      <aside class="side">
+        <div class="card">
+          <h3>运行</h3>
+          <p class="hint">两种方式，结果一样。密钥与输入都不经过本站。</p>
+          <label class="consent"><input type="checkbox" id="consent"><span>我确认有权提交以上信息，并知悉它们会发送给我选择的模型服务商（或我粘贴到的对话产品）；我不会填入他人的联系方式、合同或客户名单原文。</span></label>
+
+          <div class="modes" style="margin-top:14px">
+            <div class="mode on" id="mode-a">
+              <h3><input type="radio" name="mode" value="a" checked> 直接调用</h3>
+              <div class="body">
+                <div class="field"><label for="provider">模型服务商</label><select id="provider"></select><div class="sub" id="provider-note"></div></div>
+                <div class="field" id="base-field" hidden><label for="base">接口地址（OpenAI 兼容，到 /v1 为止）</label><input type="url" id="base" placeholder="https://example.com/v1" autocomplete="off"></div>
+                <div class="field"><label for="key">你的 API 密钥</label><input type="password" id="key" autocomplete="off" spellcheck="false" placeholder="只存内存，刷新即忘"><div class="sub"><label style="display:inline-flex;gap:6px;align-items:center;margin:4px 0 0"><input type="checkbox" id="remember"> 记在这个浏览器里（localStorage，明文，公用电脑请勿勾选）</label></div></div>
+                <div class="field"><label for="model">模型名</label><input type="text" id="model" list="model-list" autocomplete="off" spellcheck="false"><datalist id="model-list"></datalist><div class="sub">以服务商当前的模型列表为准；填好密钥后可<a href="#" id="btn-models"><u>读取模型列表</u></a>。</div></div>
+                <div class="actions" style="margin-top:6px"><button type="button" class="btn solid" id="btn-run">开始评审</button></div>
+                <div class="status-line" id="status-a"></div>
+              </div>
+            </div>
+            <div class="mode" id="mode-b">
+              <h3><input type="radio" name="mode" value="b"> 零接口</h3>
+              <div class="body">
+                <p class="hint">第一步：复制提示词，粘贴到任意对话模型（网页或 App 都行）。第二步：把它回复的 JSON 原样贴到下面，解析。</p>
+                <div class="actions" style="margin-top:0"><button type="button" class="btn" id="btn-copy-prompt">① 复制提示词</button><button type="button" class="btn small" id="btn-show-prompt">查看提示词</button></div>
+                <div class="field" style="margin-top:12px"><label for="paste">② 粘贴模型回复</label><textarea id="paste" placeholder='{"version":"review-output-v1", ...}' spellcheck="false"></textarea></div>
+                <div class="actions" style="margin-top:0"><button type="button" class="btn solid" id="btn-parse">③ 解析并展示</button></div>
+                <div class="status-line" id="status-b"></div>
+              </div>
+            </div>
+          </div>
+          <details style="margin-top:14px;font-size:14px;color:var(--ink-2)"><summary style="cursor:pointer">直连实测说明（2026-11-05）</summary>
+            <p style="margin:8px 0 0">在一台位于上海的电脑上从浏览器直接请求各家接口：DeepSeek、通义千问（百炼）、Kimi（Moonshot）、SiliconFlow、MiniMax、Anthropic 允许浏览器跨域直连；智谱、火山方舟（豆包）、OpenAI 在该网络下无法直连，请用零接口方式。你的网络可能不同。</p>
+          </details>
+        </div>
+      </aside>
+    </div>
+
+    <!-- 结果 -->
+    <div class="result" id="result">
+      <hr class="rule strong" style="margin:40px 0 28px">
+      <div class="sec-head">
+        <div>
+          <div class="no">结果</div>
+          <h2 id="res-title">评审结果</h2>
+          <span class="en" id="res-meta">Result</span>
+        </div>
+        <p class="lede" id="res-summary"></p>
+      </div>
+      <div class="banner">AI 辅助自评 · 未经独立核验 · 不代表海豹增长背书 · 不构成投资建议 · 不承诺融资或收益。档位由你最终决定；模型只给建议与缺口。</div>
+      <div class="res-head">
+        <div id="res-hex"></div>
+        <div>
+          <dl class="kv">
+            <dt>综合参考</dt><dd id="res-overall"></dd>
+            <dt>最弱关键前提</dt><dd id="res-weakest"></dd>
+            <dt>关卡</dt><dd id="res-gates"></dd>
+          </dl>
+        </div>
+      </div>
+      <div class="res-grid">
+        <div>
+          <div class="res-block"><h3>六维</h3><ul class="res-axes" id="res-axes"></ul></div>
+          <div class="res-block"><h3>关键前提</h3><ul class="res-list" id="res-premises"></ul></div>
+        </div>
+        <div>
+          <div class="res-block"><h3>下一步要证明什么</h3><ul class="res-list" id="res-next"></ul></div>
+          <div class="res-block"><h3>要补的材料</h3><ul class="res-list" id="res-requests"></ul></div>
+          <div class="res-block"><h3>会上要问的三个问题</h3><ul class="res-list" id="res-questions"></ul></div>
+          <div class="res-block"><h3>模型自述的不确定处</h3><ul class="res-list" id="res-caveats"></ul></div>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:24px">
+        <button type="button" class="btn solid" id="btn-export-md">复制 Markdown</button>
+        <button type="button" class="btn" id="btn-dl-md">下载 .md</button>
+        <button type="button" class="btn" id="btn-dl-json">下载 JSON</button>
+        <button type="button" class="btn small" id="btn-raw">查看原始输出</button>
+      </div>
+      <div class="status-line" id="status-r"></div>
+      <pre class="pre" id="raw" hidden></pre>
+    </div>
+
+    <pre class="pre" id="prompt-view" hidden style="margin-top:24px"></pre>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="big">推动中国 AGI 产业发展</div>
+      <div class="sub">促进前沿技术的真实价值更早获得认知</div>
+      <span class="en">Advance China's AGI industry · SEAL Growth · 2026</span>
+    </div>
+    <ul>
+      <li><a href="index.html">首页</a></li>
+      <li><a href="method.html">方法</a></li>
+      <li><a href="open/">开源文件</a></li>
+      <li><a href="#top">回到顶部</a></li>
+    </ul>
+    <p class="legal">海豹增长不提供资金，不收费，不以盈利为目的；不向任何人承诺回报，不公开募集资金。本页工具按原样提供，输出为 AI 辅助自评，未经独立核验，不构成投资建议。密钥与输入不经过本站。文档 CC BY-SA 4.0 · 代码 Apache-2.0。</p>
+  </div>
+</footer>
+
+<script src="assets/review.js" defer></script>
+</body>
+</html>

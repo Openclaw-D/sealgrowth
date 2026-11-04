@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>开源文件 · 海豹增长 SEAL Growth</title>
+<meta name="description" content="海豹增长评审方法 V3 的全部公开文件：方法全文、评分锚点、提示词、输出 Schema、记录 Schema、合成样例，以及本机打分表应用。文档 CC BY-SA 4.0，代码 Apache-2.0。">
+<meta property="og:title" content="开源文件 · 海豹增长">
+<meta property="og:description" content="方法和代码全部公开；项目方交给我们的材料永不公开。">
+<meta property="og:image" content="../assets/seal-mark-512.png">
+<meta name="theme-color" content="#1f1f1f">
+<link rel="icon" type="image/png" href="../assets/seal-mark-192.png">
+<link rel="apple-touch-icon" href="../assets/seal-mark-192.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="海豹增长 首页">
+      <img src="../assets/seal-mark-192.png" alt="" width="36" height="36">
+      <b>海豹增长</b><span class="en">SEAL Growth</span>
+    </a>
+    <nav aria-label="站内">
+      <ul>
+        <li><a href="../method.html">方法</a></li>
+        <li><a href="../review.html">评审</a></li>
+        <li><a href="../index.html#contact">联系</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="page-head" aria-labelledby="h-open">
+  <div class="wrap">
+    <div>
+      <div class="en eyebrow">Open files · V3 · 2026-11-05</div>
+      <h1 id="h-open">我们有什么，<br>就公开什么</h1>
+    </div>
+    <div>
+      <p class="lede">评审方法、评分锚点、提示词、数据结构、合成样例和本机打分表应用，全部在这里，可下载、可修改、可再分发。唯一不公开的是项目方交给我们的材料：那些只留在本地，也不会出现在任何示例里。</p>
+      <dl class="kv" style="margin-top:14px">
+        <dt>文档</dt><dd>CC BY-SA 4.0：署名"海豹增长 SEAL Growth · 评审方法 V3"，改了也要同样公开。</dd>
+        <dt>代码</dt><dd>Apache-2.0：随便用，保留许可声明即可。</dd>
+        <dt>例外</dt><dd>海豹图形与"海豹增长 / SEAL Growth"名称只用于标识本项目，请勿用于暗示背书。</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-files" style="padding-top:36px">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="no">01</div><h2 id="h-files">文件</h2><span class="en">Files</span></div>
+      <p class="lede">六个文件是网站"方法"页和"评审"页的底稿；最后一项是本机运行的打分表与报告生成器，放在代码仓库里。</p>
+    </div>
+    <ul class="files">
+      <li><div><b>方法全文 V3</b><span>METHOD-V3.md · 五条原则、六维、四档、锚点全表、关卡、关键前提、参考值、字数限制、流程、两版报告、版本记录 · CC BY-SA 4.0</span></div><a class="dl" href="METHOD-V3.md" download>下载</a></li>
+      <li><div><b>评分锚点</b><span>anchors-v3.json · 六维 × 三档锚点、档位与颜色、阶段、关卡、前提状态、参考值规则、字数限制，机器可读 · CC BY-SA 4.0</span></div><a class="dl" href="anchors-v3.json" download>下载</a></li>
+      <li><div><b>评审提示词 V1</b><span>prompt-v1.md · 网页工具用的系统提示词逐字版，加速查表的 Markdown 格式；可贴进任意对话模型 · CC BY-SA 4.0</span></div><a class="dl" href="prompt-v1.md" download>下载</a></li>
+      <li><div><b>评审输出 Schema</b><span>review-output.schema.json · 模型输出 review-output-v1 的 JSON Schema（2020-12） · Apache-2.0</span></div><a class="dl" href="review-output.schema.json" download>下载</a></li>
+      <li><div><b>V3 记录 Schema</b><span>v3-record.schema.json · 打分表应用完整记录的 JSON Schema，对应 model.py 的校验规则 · Apache-2.0</span></div><a class="dl" href="v3-record.schema.json" download>下载</a></li>
+      <li><div><b>合成样例</b><span>sample-company.draft.json · 一家虚构公司的完整 V3 记录，所有人物、客户、数字、来源都是合成的；可直接导入打分表应用 · CC BY-SA 4.0</span></div><a class="dl" href="sample-company.draft.json" download>下载</a></li>
+      <li><div><b>打分表应用与报告生成器</b><span>tools/scoring-sheet/ · Python 3 标准库，本机运行；可编辑的打分表、V3 校验、创始人版与投资人版报告（HTML，PDF 需本机 Chrome）、合成夹具与自检 · Apache-2.0 · 代码仓库地址上线后在此公布</span></div><span class="en" style="font-size:13px;color:var(--muted)">in the repository</span></li>
+    </ul>
+  </div>
+</section>
+
+<section aria-labelledby="h-how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="no">02</div><h2 id="h-how">三种用法</h2><span class="en">Three ways to use them</span></div>
+    </div>
+    <ol class="rules">
+      <li><b>照着评。</b>读方法全文，按锚点全表给一家公司的六个维度各归一档，关卡经核实才阻断，关键前提逐条标状态。不需要任何软件。</li>
+      <li><b>让模型帮你评。</b>用<a href="../review.html"><u>评审工具</u></a>：填速查表，用自己的密钥直接调用模型服务商，或复制提示词到任意对话模型。密钥与输入不经过本站。</li>
+      <li><b>自己跑打分表。</b>克隆仓库，<code>cd tools/scoring-sheet &amp;&amp; python3 serve.py</code>，在浏览器里编辑合成样例，生成两版报告。把真实项目的数据目录放在仓库之外。</li>
+    </ol>
+    <p class="note" style="margin-top:18px">核验：网站发布前，脚本会比对 prompt-v1.md 与评审工具代码里的提示词逐字一致，比对 anchors-v3.json 与工具内置锚点一致，并用打分表应用的校验器跑一遍合成样例。</p>
+  </div>
+</section>
+
+<section aria-labelledby="h-notes">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="no">03</div><h2 id="h-notes">说明</h2><span class="en">Notes</span></div>
+    </div>
+    <ul class="versions">
+      <li><b>不公开的东西。</b>真实项目材料、评审记录、评审人信息、联系人。仓库和网站上出现的每一家公司都是虚构的合成样例。</li>
+      <li><b>不构成投资建议。</b>方法、工具和样例按原样提供；用它们得出的任何结论都不构成投资建议，不承诺融资或收益。</li>
+      <li><b>版本。</b>方法 V3（2026-11-03）；创始人版写法补充（2026-11-04）；网页版、提示词 V1、两份 Schema（2026-11-05）。改动会写进 METHOD-V3.md 的版本记录。</li>
+      <li><b>反馈。</b>发现锚点写得不清楚、规则有漏洞、样例不够合成，欢迎来信或在代码仓库提 issue。</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="big">推动中国 AGI 产业发展</div>
+      <div class="sub">促进前沿技术的真实价值更早获得认知</div>
+      <span class="en">Advance China's AGI industry · SEAL Growth · 2026</span>
+    </div>
+    <ul>
+      <li><a href="../index.html">首页</a></li>
+      <li><a href="../method.html">方法</a></li>
+      <li><a href="../review.html">评审工具</a></li>
+      <li><a href="#top">回到顶部</a></li>
+    </ul>
+    <p class="legal">海豹增长不提供资金，不收费，不以盈利为目的；不向任何人承诺回报，不公开募集资金。本页文件按原样提供，不构成投资建议。文档 CC BY-SA 4.0 · 代码 Apache-2.0。</p>
+  </div>
+</footer>
+
+</body>
+</html>
