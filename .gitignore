@@ -10,3 +10,10 @@ tools/scoring-sheet/data-v3/versions/
 tools/scoring-sheet/data-v3/*
 !tools/scoring-sheet/data-v3/sample-company.draft.json
 !tools/scoring-sheet/data-v3/reviewer.txt
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example

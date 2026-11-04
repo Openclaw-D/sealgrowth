@@ -26,9 +26,17 @@ python3 -m http.server 8787 --directory site
 
 网站是纯静态文件，部署目录为 `site/`，没有构建步骤。
 
-- Cloudflare Pages：新建项目，连接本仓库或用 `wrangler pages deploy site` 直接上传；构建命令留空，输出目录填 `site`。Pages 会读取 `site/_headers`，给所有页面加上 CSP 等安全响应头（本地 `python3 -m http.server` 预览时没有这些头）。
-- 其他静态托管：把 `site/` 整个目录原样放上去即可。评审工具页只靠浏览器直连模型服务商，不需要任何服务端。
-- CSP 的 `connect-src` 只放行 https 和本机地址（localhost、127.0.0.1）；自定义服务商若填 http 的非本机地址，会被浏览器拦下。
+当前使用 **Cloudflare Workers 静态资源**（Cloudflare Pages 的新版本）：`wrangler.jsonc` 里项目名为 `sealgrowth`，`assets.directory` 为 `site`。在已登录 Cloudflare 的环境里，从仓库根目录执行：
+
+```sh
+WRANGLER_SEND_METRICS=false npx --yes wrangler@4 deploy
+```
+
+部署目录必须包含 `site/_headers`，平台会据此下发安全响应头。部署后检查 `/`、`/method.html`、`/review.html`、`/open/index.html`、`/open/prompt-v1.md` 均为 200，且带有 Content-Security-Policy、X-Content-Type-Options、Referrer-Policy、X-Frame-Options、Permissions-Policy、Cross-Origin-Opener-Policy 六个头。本地 `python3 -m http.server` 预览没有这些响应头。
+
+其他静态托管（Netlify、Vercel、GitHub Pages、自建 Nginx）也能直接托管 `site/`，但要自行配置上述响应头。
+
+评审工具页只靠浏览器直连模型服务商，不需要任何服务端。CSP 的 `connect-src` 只放行 https 和本机地址（localhost、127.0.0.1）；自定义服务商若填 http 的非本机地址，会被浏览器拦下。
 
 ## 评审工具怎么保证密钥和输入不经过本站
 
