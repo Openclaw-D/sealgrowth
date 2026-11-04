@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sealgrowth.cn/open/v3-record.schema.json",
+  "title": "海豹增长评审记录 V3（打分表应用数据文件）",
+  "description": "与 tools/scoring-sheet/model.py 的 validation_errors() 对应。JSON Schema 无法表达的跨字段规则写在各字段 description 里：资金用途非空时合计 100；关卡任一 block 当且仅当 overall.level 为 hold；judgments/problems/premises 引用的来源编号必须存在且不重复；资料不足时索证前 8 条各 30 字；level 为 unknown 或 weak 时 next 不能为空；含「待填」的文字不可确认对外。",
+  "type": "object",
+  "required": ["meta", "company", "analysis", "axes", "overall", "premises", "gates", "judgments", "problems", "card", "sources"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["version", "as_of", "brand_cn", "brand_en", "fa_disclosure", "disclaimer"],
+      "properties": {
+        "version": {"const": "V3"},
+        "as_of": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "有效的 YYYY-MM-DD 日期"},
+        "brand_cn": {"const": "海豹增长"},
+        "brand_en": {"const": "SEAL Growth"},
+        "fa_disclosure": {"type": "string", "maxLength": 120, "description": "FA 利益关系披露，可为空"},
+        "disclaimer": {"type": "string", "minLength": 1, "maxLength": 120}
+      }
+    },
+    "company": {
+      "type": "object",
+      "required": ["id", "name", "sector", "business", "stage", "round", "fund_use"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9-]{1,64}$"},
+        "name": {"$ref": "#/$defs/text120"},
+        "sector": {"$ref": "#/$defs/text120"},
+        "business": {"$ref": "#/$defs/text120"},
+        "stage": {"enum": ["概念", "原理验证", "样机", "试点", "付费", "量产"]},
+        "round": {
+          "type": "object", "required": ["name", "amount", "valuation", "dilution"],
+          "properties": {
+            "name": {"$ref": "#/$defs/text40"}, "amount": {"$ref": "#/$defs/text40"},
+            "valuation": {"$ref": "#/$defs/text40"}, "dilution": {"$ref": "#/$defs/text40"}
+          }
+        },
+        "fund_use": {
+          "type": "array", "minItems": 0, "maxItems": 6, "description": "非空时 pct 合计必须为 100",
+          "items": {
+            "type": "object", "required": ["label", "pct"],
+            "properties": {"label": {"type": "string", "minLength": 1, "maxLength": 12}, "pct": {"type": "integer", "minimum": 0, "maximum": 100}}
+          }
+        }
+      }
+    },
+    "axes": {
+      "type": "array", "minItems": 6, "maxItems": 6, "items": false,
+      "prefixItems": [
+        {"$ref": "#/$defs/axis", "properties": {"name": {"const": "市场需求"}}},
+        {"$ref": "#/$defs/axis", "properties": {"name": {"const": "商业模式"}}},
+        {"$ref": "#/$defs/axis", "properties": {"name": {"const": "资本效率"}}},
+        {"$ref": "#/$defs/axis", "properties": {"name": {"const": "竞争壁垒"}}},
+        {"$ref": "#/$defs/axis", "properties": {"name": {"const": "执行能力"}}},
+        {"$ref": "#/$defs/axis", "properties": {"name": {"const": "投资回报"}}}
+      ]
+    },
+    "overall": {
+      "type": "object", "required": ["level"],
+      "properties": {"level": {"enum": ["unknown", "weak", "normal", "strong", "hold", null], "description": "由人定；null 表示未定档，不可确认对外；hold 当且仅当有关卡 block"}}
+    },
+    "gates": {
+      "type": "object", "required": ["fraud", "tech", "cash", "integrity", "note"],
+      "properties": {
+        "fraud": {"$ref": "#/$defs/gate_state"}, "tech": {"$ref": "#/$defs/gate_state"},
+        "cash": {"$ref": "#/$defs/gate_state"}, "integrity": {"$ref": "#/$defs/gate_state"},
+        "note": {"type": "string", "maxLength": 200, "description": "只在内部"}
+      }
+    },
+    "sources": {
+      "type": "array", "minItems": 1, "maxItems": 30,
+      "items": {"type": "object", "required": ["id", "short"], "properties": {"id": {"$ref": "#/$defs/id"}, "short": {"$ref": "#/$defs/text120"}}}
+    },
+    "premises": {
+      "type": "array", "minItems": 2, "maxItems": 5,
+      "items": {
+        "type": "object", "required": ["id", "text", "status", "critical", "sources"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "text": {"$ref": "#/$defs/text40"},
+          "status": {"enum": ["false", "unverified", "partial", "verified"]},
+          "critical": {"type": "boolean"},
+          "sources": {"$ref": "#/$defs/refs0"}
+        }
+      },
+      "contains": {"type": "object", "properties": {"critical": {"const": true}}, "required": ["critical"]},
+      "minContains": 1
+    },
+    "judgments": {
+      "type": "array", "minItems": 1, "maxItems": 5,
+      "items": {
+        "type": "object", "required": ["id", "text", "external", "sources", "evidence"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "text": {"$ref": "#/$defs/text100"},
+          "external": {"type": "boolean"},
+          "sources": {"$ref": "#/$defs/refs1"},
+          "evidence": {"enum": ["公司自述", "文件佐证", "独立核验"]}
+        }
+      },
+      "contains": {"type": "object", "properties": {"external": {"const": true}}, "required": ["external"]},
+      "minContains": 3, "maxContains": 5,
+      "description": "对外（external=true）3–5 条"
+    },
+    "problems": {
+      "type": "array", "minItems": 1, "maxItems": 5,
+      "items": {
+        "type": "object", "required": ["id", "text", "external", "sources", "verify", "by", "pass", "likelihood", "impact"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "text": {"$ref": "#/$defs/text100"},
+          "external": {"type": "boolean"},
+          "sources": {"$ref": "#/$defs/refs1"},
+          "verify": {"type": "string", "maxLength": 22, "description": "对外条目不能为空"},
+          "by": {"type": "string", "maxLength": 6, "description": "对外条目不能为空"},
+          "pass": {"type": "string", "maxLength": 12, "description": "对外条目不能为空"},
+          "likelihood": {"type": "integer", "minimum": 1, "maximum": 3},
+          "impact": {"type": "integer", "minimum": 1, "maximum": 3}
+        },
+        "if": {"properties": {"external": {"const": true}}},
+        "then": {"properties": {"verify": {"minLength": 1}, "by": {"minLength": 1}, "pass": {"minLength": 1}}}
+      },
+      "contains": {"type": "object", "properties": {"external": {"const": true}}, "required": ["external"]},
+      "minContains": 3, "maxContains": 5,
+      "description": "对外（external=true）3–5 条"
+    },
+    "card": {
+      "type": "object", "required": ["founder", "team", "business", "vision", "vision_source"],
+      "properties": {
+        "founder": {"$ref": "#/$defs/text100"}, "team": {"$ref": "#/$defs/text100"}, "business": {"$ref": "#/$defs/text100"},
+        "vision": {"$ref": "#/$defs/text100"}, "vision_source": {"$ref": "#/$defs/text100"}
+      }
+    },
+    "analysis": {
+      "type": "object", "description": "分析底稿，只在内部",
+      "required": ["summary", "macro", "meso", "micro", "chain", "cash", "terms", "requests"],
+      "properties": {
+        "summary": {"type": "string", "minLength": 1, "maxLength": 300},
+        "macro": {"type": "array", "minItems": 0, "maxItems": 3, "items": {"$ref": "#/$defs/analysis_item_macro"}},
+        "meso": {"type": "array", "minItems": 1, "maxItems": 5, "items": {"$ref": "#/$defs/analysis_item"}},
+        "micro": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"$ref": "#/$defs/analysis_item"}},
+        "chain": {"type": "array", "minItems": 0, "maxItems": 6, "items": {"type": "string", "minLength": 1, "maxLength": 60}},
+        "cash": {"type": "object", "required": ["runway_months", "note"], "properties": {"runway_months": {"type": ["integer", "null"]}, "note": {"$ref": "#/$defs/text100"}}},
+        "terms": {"type": "object", "required": ["note"], "properties": {"note": {"type": "string", "minLength": 1, "maxLength": 200}}},
+        "requests": {"type": "array", "minItems": 1, "maxItems": 12, "items": {"type": "string", "minLength": 1, "maxLength": 60}, "description": "资料不足时前 8 条各 30 字"}
+      }
+    },
+    "internal_notes": {"type": "string", "maxLength": 10000},
+    "confirmation": {"type": "object", "properties": {"by": {"type": "string"}, "at": {"type": "string"}, "version": {"type": "string"}}, "description": "确认对外时写入"},
+    "_saved_at": {"type": "string"}
+  },
+  "$defs": {
+    "id": {"type": "integer", "minimum": 1, "maximum": 999},
+    "text40": {"type": "string", "minLength": 1, "maxLength": 40},
+    "text100": {"type": "string", "minLength": 1, "maxLength": 100},
+    "text120": {"type": "string", "minLength": 1, "maxLength": 120},
+    "refs0": {"type": "array", "minItems": 0, "maxItems": 10, "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+    "refs1": {"type": "array", "minItems": 1, "maxItems": 10, "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+    "tier": {"enum": ["unknown", "weak", "normal", "strong", "na"]},
+    "gate_state": {"enum": ["unchecked", "pass", "block"]},
+    "axis": {
+      "type": "object", "required": ["name", "suggested", "level", "reason", "next", "public_reason", "confidence"],
+      "properties": {
+        "name": {"enum": ["市场需求", "商业模式", "资本效率", "竞争壁垒", "执行能力", "投资回报"]},
+        "suggested": {"$ref": "#/$defs/tier", "description": "参考值或助手建议"},
+        "level": {"$ref": "#/$defs/tier", "description": "评审人定的档位"},
+        "reason": {"$ref": "#/$defs/text100", "description": "内部依据"},
+        "next": {"type": "string", "maxLength": 60, "description": "level 为 unknown 或 weak 时不能为空"},
+        "public_reason": {"type": "string", "minLength": 1, "maxLength": 24},
+        "confidence": {"enum": ["high", "medium", "low", "none"], "description": "只在内部"}
+      },
+      "if": {"properties": {"level": {"enum": ["unknown", "weak"]}}},
+      "then": {"properties": {"next": {"minLength": 1}}}
+    },
+    "analysis_item": {
+      "type": "object", "required": ["text", "evidence", "sources"],
+      "properties": {"text": {"$ref": "#/$defs/text100"}, "evidence": {"enum": ["公司自述", "文件佐证", "独立核验", "推断"]}, "sources": {"$ref": "#/$defs/refs0"}}
+    },
+    "analysis_item_macro": {
+      "type": "object", "required": ["text", "evidence", "sources", "effect"],
+      "properties": {"text": {"$ref": "#/$defs/text100"}, "evidence": {"enum": ["公司自述", "文件佐证", "独立核验", "推断"]}, "sources": {"$ref": "#/$defs/refs0"}, "effect": {"enum": ["需求", "准入", "成本", "定价"]}}
+    }
+  }
+}

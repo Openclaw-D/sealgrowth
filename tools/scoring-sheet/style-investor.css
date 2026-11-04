@@ -1,0 +1,14 @@
+.report-page { grid-template-areas:"header" "strip" "judgments" "enterprise" "problems" "footer"; }
+.enterprise-column { grid-area:enterprise; }
+.enterprise-card { display:flex; flex-direction:column; gap:8px; }
+.identity-card { border:1px solid var(--gray-400); border-radius:var(--radius-card); display:flex; gap:8px; align-items:center; padding:4px 8px; min-width:0; font-size:var(--type-body); line-height:var(--leading-meta); }
+.identity-card b { flex-shrink:0; padding-right:8px; border-right:1px solid var(--gray-400); }
+.card-copy { overflow-wrap:anywhere; }
+.premises-block { margin-top:8px; }
+.premises-block h3 { font-size:var(--type-label); margin:0 0 8px; line-height:var(--leading-item); }
+.premise-list { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
+.premise-copy { font-size:var(--type-body); line-height:var(--leading-meta); overflow-wrap:anywhere; }
+.premise-status { color:var(--gray-600); }
+
+@media screen and (min-width:1024px) { .report-page { grid-template-columns:minmax(0,32fr) minmax(0,30fr) minmax(0,38fr); grid-template-areas:"header header header" "strip strip strip" "judgments enterprise problems" "footer footer footer"; grid-template-rows:88px minmax(96px,max-content) minmax(min-content,1fr) max-content; } }
+@media print { html[data-print-layout="landscape"] .report-page { grid-template-columns:minmax(0,32fr) minmax(0,30fr) minmax(0,38fr); grid-template-areas:"header header header" "strip strip strip" "judgments enterprise problems" "footer footer footer"; grid-template-rows:88px minmax(96px,max-content) minmax(0,1fr) max-content; } }

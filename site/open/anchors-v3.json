@@ -1,0 +1,111 @@
+{
+  "schema": "seal-growth-anchors",
+  "method_version": "V3",
+  "as_of": "2026-11-05",
+  "license": "CC-BY-SA-4.0",
+  "source": "https://sealgrowth.cn/open/METHOD-V3.md",
+  "principles": [
+    "四档是质量判断，按同阶段比较",
+    "未知 = 还没证明，不是差；不计分、不画面积",
+    "不适用 = 公司还没走到这一步；写明原因，不计分",
+    "关卡不计分，经核实才阻断；任一阻断，综合为暂缓",
+    "综合由人定；参考值是已评维度均值，只做参考"
+  ],
+  "stages": ["概念", "原理验证", "样机", "试点", "付费", "量产"],
+  "tiers": {
+    "unknown": {"word": "未知", "color": "#6B3FA0", "ink": "#FFFFFF", "score": null, "founder_word": "未知"},
+    "weak": {"word": "弱点", "color": "#D93025", "ink": "#FFFFFF", "score": 1, "founder_word": "待补强"},
+    "normal": {"word": "正常", "color": "#F2C200", "ink": "#000000", "score": 2, "founder_word": "正常"},
+    "strong": {"word": "优秀", "color": "#2E8B3E", "ink": "#FFFFFF", "score": 3, "founder_word": "优秀"},
+    "na": {"word": "不适用", "color": "#9AA0A6", "ink": "#000000", "score": null, "founder_word": "不适用"}
+  },
+  "overall_only": {
+    "hold": {"word": "暂缓", "color": "#1F1F1F", "ink": "#FFFFFF"}
+  },
+  "axes": [
+    {"key": "market", "name": "市场需求", "anchors": {
+      "weak": "痛点只是推断且有反证；或访谈、数据显示客户不愿付费",
+      "normal": "已核实预算人、使用场景和验收条件；有意向客户或试点",
+      "strong": "有非关联方回款，并有复购或持续使用；规模化，客户主动找来。补贴带来的需求另行标注"}},
+    {"key": "model", "name": "商业模式", "anchors": {
+      "weak": "收费方式未定；或定价逻辑与客户预算冲突",
+      "normal": "有定价逻辑，有报价或首单",
+      "strong": "计入获客、交付、售后、返工和回款周期后，单位经济为正且能复制；或经竞争检验后毛利稳定、有议价权"}},
+    {"key": "capital", "name": "资本效率", "anchors": {
+      "weak": "用途不清；或重投入却没有里程碑",
+      "normal": "有预算和里程碑，关键风险正在用小钱消除",
+      "strong": "与同阶段、同路线公司相比验证成果更多，现金跑道充足；或能自我造血"}},
+    {"key": "moat", "name": "竞争壁垒", "anchors": {
+      "weak": "没有差异；或已有近邻方案而无应对",
+      "normal": "有差异主张，并在同等条件下对照验证过（只有专利申请不算）",
+      "strong": "客户认可的差异，绕开难度高；或数据、渠道、规模多重壁垒且能持续。授权专利本身不自动给优秀"}},
+    {"key": "execution", "name": "执行能力", "anchors": {
+      "weak": "团队不完整，且没有交付记录",
+      "normal": "核心人员到位、有相关经历，已交付原型（原型、量产、客户验收分开计）",
+      "strong": "多次按期交付，有客户验收，良率和可靠性经过核查；团队完备"}},
+    {"key": "return", "name": "投资回报", "anchors": {
+      "weak": "估值明显高于证据；或条款不清",
+      "normal": "估值与阶段大体匹配",
+      "strong": "考虑失败、延期、后续融资、稀释和清算顺序后估值仍合理；有折价（说明参照对象）或退出路径清楚"}}
+  ],
+  "writing_rule": "每维一句对外理由（24 字内）；未知写缺什么，弱点写短板在哪，正常与优秀写依据；弱点和未知一定配下一步要证明什么（60 字内）",
+  "evidence": ["公司自述", "文件佐证", "独立核验"],
+  "analysis_evidence_extra": ["推断"],
+  "gates": [
+    {"key": "fraud", "name": "造假"},
+    {"key": "tech", "name": "关键技术不可行"},
+    {"key": "cash", "name": "现金即将断流"},
+    {"key": "integrity", "name": "诚信与关联交易"}
+  ],
+  "gate_states": {"unchecked": "未核查", "pass": "通过", "block": "阻断"},
+  "gate_rule": "任一 block 当且仅当 overall.level 为 hold；unchecked 不等于 pass",
+  "premise_status": {"verified": "已核实", "partial": "部分核实", "unverified": "未核实", "false": "不成立"},
+  "premise_marks": {"verified": "●", "partial": "◐", "unverified": "○", "false": "×"},
+  "premise_rule": "2–5 条，每条 40 字内，至少一条 critical；最弱关键前提显示在综合旁",
+  "confidence": {
+    "high": "高：经过独立重复验证",
+    "medium": "中：有直接证据但覆盖面有限",
+    "low": "低：只有间接证据或证据有冲突",
+    "none": "无：没有证据"
+  },
+  "reference": {
+    "weights": {"weak": 1, "normal": 2, "strong": 3},
+    "rounding": "half-up",
+    "min_rated_axes": 3,
+    "below_min": "资料不足",
+    "note": "只做参考，不自动写入综合；数值中间量不对外"
+  },
+  "insufficient_rule": "已评维度少于三个，或创始人与团队信息都未确认：创始人版只给索证清单（前 8 条），投资人版不生成",
+  "limits": {
+    "public_reason": 24, "reason": 100, "next": 60,
+    "premise_text": 40, "premises": [2, 5],
+    "judgment_text": 100, "judgments": [1, 5], "external_items": [3, 5],
+    "problem_text": 100, "problems": [1, 5], "problem_verify": 22, "problem_by": 6, "problem_pass": 12,
+    "requests": [1, 12], "request_text": 60, "request_text_when_lacking": 30, "requests_shown_when_lacking": 8,
+    "sources": [1, 30], "source_short": 120,
+    "gates_note": 200,
+    "fund_use_items": [0, 6], "fund_use_label": 12,
+    "card_fields": 100, "analysis_summary": 300
+  },
+  "founder_report": {
+    "pages": ["一页诊断", "一页行动清单", "可选一页索证"],
+    "max_pages": 3,
+    "weak_word": "待补强",
+    "watermark": "仅供 × 公司内部参考 · 未经核实数据以公司自述为准"
+  },
+  "investor_report": {"includes": ["企业卡片", "关键前提", "对外判断", "对外问题", "来源"], "excludes": ["六维档位", "对外理由"], "not_generated_when": "资料不足"},
+  "workflow": [
+    "线上接触：用代号登记，材料只留本地",
+    "会前核对，只做三件事：工商与公开信息、直接竞品、自述客户是否存在",
+    "三十分钟会议：按六维提问，每维记一句证据和来源",
+    "会后校验：改档写原档 → 新档 + 证据",
+    "创始人版报告：三页以内，一周内闭环"
+  ],
+  "tool_v1_extra_rules": [
+    "只能依据速查表里写了的内容判断，不得发明数字、客户、合同、来源或背景",
+    "仅凭公司自述的内容最多支持到正常，不能单凭自述给优秀",
+    "填表人已选的档位不改，只写同意与否和理由；没选的才给建议",
+    "只输出 JSON，全部简体中文，遵守字数上限"
+  ],
+  "disclaimer": "AI 辅助自评 · 未经独立核验 · 不代表海豹增长背书 · 不构成投资建议 · 不承诺融资或收益"
+}

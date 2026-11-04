@@ -1,0 +1,26 @@
+.report-page { grid-template-areas:"header" "strip" "weakest" "judgments" "problems" "auxiliary" "footer"; }
+.auxiliary-column { grid-area:auxiliary; }
+.weakest-line { grid-area:weakest; margin:0; font-size:var(--type-body); line-height:var(--leading-meta); color:var(--gray-600); overflow-wrap:anywhere; }
+.level-chip { display:inline-flex; align-items:center; justify-content:center; padding:0 6px; border-radius:6px; font-size:var(--type-body); font-weight:750; white-space:nowrap; line-height:var(--leading-meta); }
+.column-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; background:var(--gray-200); border-radius:var(--radius-chip); padding-right:8px; }
+.column-heading h2 { flex-shrink:0; }
+.legend-block { display:flex; flex-direction:column; align-items:flex-end; }
+.level-legend { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:4px; }
+.level-legend .level-chip { font-size:var(--type-caption); padding:0 4px; line-height:24px; }
+.legend-note { font-size:var(--type-caption); color:var(--gray-600); line-height:24px; }
+.radar-shell { width:100%; }
+.radar-svg { width:100%; height:auto; display:block; overflow:visible; }
+.radar-grid { fill:none; stroke:var(--gray-400); stroke-width:1; }
+.radar-axis { stroke:var(--gray-300); stroke-width:1; }
+.radar-polygon { fill:var(--gray-700); fill-opacity:.13; stroke:var(--gray-900); stroke-width:2; }
+.radar-dot,.radar-empty { stroke:var(--gray-900); stroke-width:1.5; }
+.radar-label { display:flex; align-items:center; justify-content:center; height:100%; font-weight:650; line-height:32px; white-space:nowrap; }
+.axis-reasons { display:flex; flex-direction:column; gap:4px; }
+.axis-reason { margin:0; font-size:var(--type-body); line-height:var(--leading-meta); }
+.request-list { margin:0; padding-left:2em; display:flex; flex-direction:column; gap:16px; }
+.request-list li { font-size:var(--type-body); line-height:var(--leading-meta); }
+
+@media screen and (min-width:1024px) { .report-page { grid-template-columns:minmax(0,30fr) minmax(0,38fr) minmax(0,32fr); grid-template-areas:"header header header" "strip strip strip" "weakest weakest weakest" "judgments problems auxiliary" "footer footer footer"; grid-template-rows:88px minmax(96px,max-content) max-content minmax(min-content,1fr) max-content; } }
+@media print { html[data-print-layout="landscape"] .report-page { grid-template-columns:minmax(0,30fr) minmax(0,38fr) minmax(0,32fr); grid-template-areas:"header header header" "strip strip strip" "weakest weakest weakest" "judgments problems auxiliary" "footer footer footer"; grid-template-rows:88px minmax(96px,max-content) max-content minmax(0,1fr) max-content; } }
+@media screen and (min-width:1024px) { .top-overall .level-chip { font-size:var(--type-large); line-height:48px; } }
+@media print { html[data-print-layout="landscape"] .top-overall .level-chip { font-size:32px; line-height:48px; } }

@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "version": "V2",
+    "as_of": "2026-11-05",
+    "brand_cn": "海豹增长",
+    "brand_en": "SEAL Growth",
+    "fa_disclosure": "合成示例，仅演示评审方法，无实际融资委托。",
+    "disclaimer": "全部人物、客户、数字与来源均为合成。本工具按原样提供，不构成投资建议。"
+  },
+  "company": {
+    "id": "sample-company",
+    "name": "示例公司（合成数据）",
+    "sector": "工业视觉检测（虚构）",
+    "business": "虚构样机识别合成工件图像；合成客户甲不存在。",
+    "stage": "样机",
+    "round": {
+      "name": "合成演示轮",
+      "amount": "合成 17 示例单位",
+      "valuation": "合成 85 示例单位",
+      "dilution": "合成 20%（演示）"
+    },
+    "fund_use": [
+      {
+        "label": "合成样机",
+        "pct": 50
+      },
+      {
+        "label": "合成验证",
+        "pct": 30
+      },
+      {
+        "label": "合成协作",
+        "pct": 20
+      }
+    ]
+  },
+  "analysis": {
+    "summary": "虚构样机识别合成工件图像；合成客户甲不存在。",
+    "macro": [
+      {
+        "text": "合成需求仅供演示；合成定价尚未核验。",
+        "evidence": "推断",
+        "sources": [
+          1
+        ],
+        "effect": "需求"
+      }
+    ],
+    "meso": [
+      {
+        "text": "合成资本效率不适用；合成流程假设可复用。",
+        "evidence": "推断",
+        "sources": [
+          2
+        ]
+      }
+    ],
+    "micro": [
+      {
+        "text": "合成协作仅供演示；合成回收假设不足。",
+        "evidence": "推断",
+        "sources": [
+          3
+        ]
+      }
+    ],
+    "chain": [
+      "合成样机的识别表现尚需演示。",
+      "合成客户甲的付费假设尚需演示。",
+      "合成回收周期尚需重新计算。"
+    ],
+    "cash": {
+      "runway_months": null,
+      "note": "合成回收周期尚需重新计算。"
+    },
+    "terms": {
+      "note": "合成演示轮"
+    },
+    "requests": [
+      "检查合成图像集",
+      "核对虚构报价单",
+      "复算合成资金表"
+    ]
+  },
+  "axes": [
+    {
+      "name": "市场需求",
+      "suggested": 1,
+      "level": 1,
+      "reason": "合成需求仅供演示",
+      "next": "检查合成图像集",
+      "public_reason": "合成需求仅供演示",
+      "confidence": "low"
+    },
+    {
+      "name": "商业模式",
+      "suggested": 2,
+      "level": 2,
+      "reason": "合成定价尚未核验",
+      "next": "核对虚构报价单",
+      "public_reason": "合成定价尚未核验",
+      "confidence": "none"
+    },
+    {
+      "name": "资本效率",
+      "suggested": 3,
+      "level": 3,
+      "reason": "合成资本效率不适用",
+      "next": "复算合成资金表",
+      "public_reason": "合成资本效率不适用",
+      "confidence": "none"
+    },
+    {
+      "name": "竞争壁垒",
+      "suggested": 4,
+      "level": 4,
+      "reason": "合成流程假设可复用",
+      "next": "检查合成图像集",
+      "public_reason": "合成流程假设可复用",
+      "confidence": "low"
+    },
+    {
+      "name": "执行能力",
+      "suggested": 5,
+      "level": 5,
+      "reason": "合成协作仅供演示",
+      "next": "核对虚构报价单",
+      "public_reason": "合成协作仅供演示",
+      "confidence": "low"
+    },
+    {
+      "name": "投资回报",
+      "suggested": 3,
+      "level": 3,
+      "reason": "合成回收假设不足",
+      "next": "复算合成资金表",
+      "public_reason": "合成回收假设不足",
+      "confidence": "low"
+    }
+  ],
+  "overall": {
+    "level": "normal"
+  },
+  "premises": [
+    {
+      "id": 1,
+      "text": "合成客户甲愿意参加虚构试用。",
+      "status": "unverified",
+      "critical": true,
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "text": "合成样机按虚构流程完成演示。",
+      "status": "partial",
+      "critical": true,
+      "sources": [
+        2
+      ]
+    },
+    {
+      "id": 3,
+      "text": "合成图像集在演示中可以读取。",
+      "status": "verified",
+      "critical": false,
+      "sources": [
+        3
+      ]
+    }
+  ],
+  "gates": {
+    "fraud": "unchecked",
+    "tech": "unchecked",
+    "cash": "unchecked",
+    "integrity": "unchecked",
+    "note": ""
+  },
+  "judgments": [
+    {
+      "id": 1,
+      "text": "合成需求仅供演示；合成定价尚未核验。",
+      "external": true,
+      "evidence": "公司自述",
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "text": "合成资本效率不适用；合成流程假设可复用。",
+      "external": true,
+      "evidence": "公司自述",
+      "sources": [
+        2
+      ]
+    },
+    {
+      "id": 3,
+      "text": "合成协作仅供演示；合成回收假设不足。",
+      "external": true,
+      "evidence": "公司自述",
+      "sources": [
+        3
+      ]
+    }
+  ],
+  "problems": [
+    {
+      "id": 1,
+      "text": "合成样机的识别表现尚需演示。",
+      "external": true,
+      "sources": [
+        1
+      ],
+      "verify": "检查合成图像集",
+      "by": "合成期内",
+      "pass": "合成检查完成",
+      "likelihood": 1,
+      "impact": 3
+    },
+    {
+      "id": 2,
+      "text": "合成客户甲的付费假设尚需演示。",
+      "external": true,
+      "sources": [
+        2
+      ],
+      "verify": "核对虚构报价单",
+      "by": "合成期内",
+      "pass": "合成记录齐备",
+      "likelihood": 2,
+      "impact": 2
+    },
+    {
+      "id": 3,
+      "text": "合成回收周期尚需重新计算。",
+      "external": true,
+      "sources": [
+        3
+      ],
+      "verify": "复算合成资金表",
+      "by": "合成期内",
+      "pass": "合成口径一致",
+      "likelihood": 3,
+      "impact": 1
+    }
+  ],
+  "card": {
+    "founder": "合成角色甲（非真实人物）",
+    "team": "合成角色乙、丙（均不存在）",
+    "business": "虚构样机识别合成工件图像；合成客户甲不存在。",
+    "vision": "用虚构样机演示工业视觉检测。",
+    "vision_source": "合成示例：演示脚本"
+  },
+  "sources": [
+    {
+      "id": 1,
+      "short": "合成示例：虚构客户甲需求卡，无真实访谈。"
+    },
+    {
+      "id": 2,
+      "short": "合成示例：虚构样机演示卡，无实际测试结果。"
+    },
+    {
+      "id": 3,
+      "short": "合成示例：虚构资金推演卡，数字不代表真实交易。"
+    }
+  ],
+  "internal_notes": ""
+}

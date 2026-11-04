@@ -1,0 +1,20 @@
+文档许可 · Documentation licence
+
+本仓库中的方法文本、提示词、说明文档和网页文案，按「知识共享 署名—相同方式共享 4.0 国际」许可协议（CC BY-SA 4.0）公开。
+The method texts, prompts, documentation and website copy in this repository are licensed under the Creative Commons Attribution-ShareAlike 4.0 International licence (CC BY-SA 4.0).
+
+适用范围 / Scope
+- site/*.html 与 site/open/index.html 中的文字；site/open/METHOD-V3.md、prompt-v1.md、anchors-v3.json；README.md；examples/ 与 tools/scoring-sheet/README.md 中的说明文字与合成样例。
+- 代码（*.js、*.cjs、*.py、*.css、HTML 的结构与脚本、JSON Schema）按 LICENSE-CODE（Apache License 2.0）。
+- 海豹图形与"海豹增长 / SEAL Growth"名称只用于标识本项目，不在上述许可之内；不得用于暗示海豹增长的背书或参与。
+- tools/scoring-sheet/EquivalentUnifiedIdeograph-18.0.0.txt 为 Unicode 数据文件，保留其原始版权与许可声明。
+
+署名方式 / Attribution
+海豹增长 SEAL Growth · 评审方法 V3 · https://sealgrowth.cn
+
+许可全文 / Full text
+https://creativecommons.org/licenses/by-sa/4.0/legalcode
+https://creativecommons.org/licenses/by-sa/4.0/deed.zh-hans
+
+声明 / Notice
+本方法与文档不构成投资建议，不承诺融资或收益。按原样提供，不附带任何明示或默示的保证。
