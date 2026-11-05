@@ -184,7 +184,7 @@
     L.push('- 团队：' + orBlank(s.team));
     L.push('- 本轮：' + orBlank(s.round));
     L.push('', '## 六维（填表人判断；"未选"表示请你建议）', '| 维度 | 填表人档位 | 证据 | 来源 |', '|---|---|---|---|');
-    s.axes.forEach(function (a) { L.push('| ' + a.name + ' | ' + (a.tier ? TIER_WORD[a.tier] + '（' + a.tier + '）' : '未选') + ' | ' + orBlank(a.evidence) + ' | ' + orBlank(a.source) + ' |'); });
+    s.axes.forEach(function (a, i) { L.push('| ' + (a.name || AXES[i]) + ' | ' + (a.tier ? TIER_WORD[a.tier] + '（' + a.tier + '）' : '未选') + ' | ' + orBlank(a.evidence) + ' | ' + orBlank(a.source) + ' |'); });
     L.push('', '## 关卡', '| 关卡 | 状态 | 理由 |', '|---|---|---|');
     GATES.forEach(function (g) { var x = s.gates[g[0]] || {}; var w = GATE_STATES.filter(function (st) { return st[0] === x.state; })[0]; L.push('| ' + g[1] + ' | ' + (w ? w[1] : '未核查') + ' | ' + orBlank(x.why) + ' |'); });
     L.push('', '## 关键前提');
@@ -283,6 +283,8 @@
         throw e;
       });
   }
+  /* 接口地址只接受 https 的服务商完整地址，且不能是本站（防止把密钥和输入发到本站或相对路径） */
+  function validBase(b) { var m = /^https:\/\/([^\/?#]+)/i.exec(b || ''); return !!m && m[1].toLowerCase() !== String(location.host).toLowerCase(); }
   function listModels(p, key) {
     var url = p.kind === 'anthropic' ? p.base + '/v1/models' : p.base + '/models';
     var headers = p.kind === 'anthropic' ? { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' } : { 'authorization': 'Bearer ' + key };
@@ -299,9 +301,17 @@
     var s = text.indexOf('{'), e = text.lastIndexOf('}');
     if (s < 0 || e < s) throw new Error('没有找到 JSON 对象。模型可能没有按要求输出，可以点"查看原始输出"。');
     var o; try { o = JSON.parse(text.slice(s, e + 1)); } catch (err) { throw new Error('JSON 解析失败：' + err.message); }
+    if (o.version !== 'review-output-v1') throw new Error('version 应为 review-output-v1，实际 ' + JSON.stringify(o.version) + '。可点"查看原始输出"。');
     var axes = arr(o.axes);
     if (axes.length !== 6) throw new Error('axes 应有 6 项，实际 ' + axes.length + ' 项。');
-    var out = { version: 'review-output-v1', summary: str(o.summary, 120) };
+    /* 六维按 name 对号入座，不按位置猜；name 必须恰好覆盖六个维度 */
+    var named = axes.filter(function (a) { return a && typeof a.name === 'string'; });
+    if (named.length) {
+      var names = named.map(function (a) { return a.name.trim(); }), lack = AXES.filter(function (n) { return names.indexOf(n) < 0; });
+      if (named.length !== 6 || lack.length) throw new Error('axes 的 name 必须是六个维度各一项，缺：' + (lack.join('、') || '（有重复或多余）') + '。');
+      axes = AXES.map(function (n) { return named.filter(function (a) { return a.name.trim() === n; })[0]; });
+    }
+    var out = { version: 'review-output-v1', summary: str(o.summary, 60) };
     out.axes = axes.map(function (a, i) { a = a || {}; return { name: AXES[i], suggested: AXIS_TIERS.indexOf(a.suggested) >= 0 ? a.suggested : 'unknown', agree: typeof a.agree === 'boolean' ? a.agree : null, reason: str(a.reason, 200), public_reason: str(a.public_reason, 40), next: str(a.next, 120), missing: str(a.missing, 80) }; });
     out.premises = arr(o.premises).slice(0, 5).map(function (p) { p = p || {}; return { text: str(p.text, 60), status: PREMISE_STATES.some(function (x) { return x[0] === p.status; }) ? p.status : 'unverified', critical: !!p.critical, why: str(p.why, 100) }; }).filter(function (p) { return p.text; });
     var g = o.gates || {}; out.gates = { note: str(g.note, 300) };
@@ -309,7 +319,14 @@
     out.next_steps = arr(o.next_steps).slice(0, 6).map(function (n) { return typeof n === 'string' ? { text: n } : { text: str((n || {}).text, 120), verify: str((n || {}).verify, 40), by: str((n || {}).by, 20), pass: str((n || {}).pass, 30) }; }).filter(function (n) { return n.text; });
     out.requests = arr(o.requests).slice(0, 8).map(function (r) { return str(r, 60); }).filter(Boolean);
     out.questions = arr(o.questions).slice(0, 5).map(function (q) { return typeof q === 'string' ? { q: q } : { q: str((q || {}).q, 120), good: str((q || {}).good, 80), red: str((q || {}).red, 80) }; }).filter(function (q) { return q.q; });
-    out.caveats = arr(o.caveats).slice(0, 6).map(function (c) { return str(c, 120); }).filter(Boolean);
+    out.caveats = arr(o.caveats).slice(0, 5).map(function (c) { return str(c, 120); }).filter(Boolean);
+    var short = [];
+    if (out.premises.length < 2) short.push('premises 至少 2 条');
+    if (out.next_steps.length < 3) short.push('next_steps 至少 3 条');
+    if (out.questions.length !== 3) short.push('questions 应为 3 条');
+    if (!out.caveats.length) short.push('caveats 至少 1 条');
+    if (!Array.isArray(o.requests)) short.push('缺 requests 数组');
+    if (short.length) throw new Error('输出不符合 review-output-v1：' + short.join('；') + '。可点"查看原始输出"。');
     return out;
   }
   /* 最终档位：填表人选了就用填表人的，否则用模型建议 */
@@ -354,7 +371,8 @@
     $('#res-meta').textContent = source + ' · ' + LAST.at.toLocaleString('zh-CN');
     $('#res-summary').textContent = out.summary || '';
     $('#res-hex').innerHTML = hexSVG(tiers);
-    $('#res-overall').innerHTML = (ref === 'insufficient' ? '<b>资料不足</b>（已评维度少于三个）' : chip(ref)) + ' <small style="color:var(--muted)">参考值按已评维度均值计算；综合档位由你定</small>';
+    var refNote = ref === 'hold' ? '有关卡未过，参考值为暂缓，不按均值' : (ref === 'insufficient' ? '已评维度少于三个，不计算均值' : '参考值按已评维度均值计算');
+    $('#res-overall').innerHTML = (ref === 'insufficient' ? '<b>资料不足</b>' : chip(ref)) + ' <small style="color:var(--muted)">' + refNote + '；综合档位由你定</small>';
     $('#res-weakest').innerHTML = wk ? esc(wk.text) + ' <small style="color:var(--muted)">' + PREMISE_MARK[wk.status] + ' ' + PREMISE_STATES.filter(function (s) { return s[0] === wk.status; })[0][1] + '</small>' : '<span style="color:var(--muted)">未给出关键前提</span>';
     $('#res-gates').innerHTML = GATES.map(function (g) { var st = out.gates[g[0]]; var w = GATE_STATES.filter(function (s) { return s[0] === st; })[0][1]; return '<span class="chip ' + (st === 'block' ? 'weak' : st === 'pass' ? 'strong' : 'na') + '" style="margin:0 6px 6px 0">' + g[1] + ' · ' + w + '</span>'; }).join('') + (out.gates.note ? '<div style="font-size:13px;color:var(--muted);margin-top:4px">' + esc(out.gates.note) + '</div>' : '');
     $('#res-axes').innerHTML = out.axes.map(function (a, i) {
@@ -375,7 +393,7 @@
     var L = LAST, s = L.sheet, o = L.out; var lines = [];
     lines.push('# ' + (s.name || '未命名') + ' · AI 辅助自评（海豹增长方法 V3）');
     lines.push('', '> AI 辅助自评 · 未经独立核验 · 不代表海豹增长背书 · 不构成投资建议 · 不承诺融资或收益。', '> 生成：' + L.at.toLocaleString('zh-CN') + ' · ' + L.source + ' · 工具 V1 · 方法 V3', '');
-    lines.push('**一句话**：' + (o.summary || '（无）'), '', '**综合参考**：' + (L.ref === 'insufficient' ? '资料不足' : TIER_WORD[L.ref]) + '（已评维度均值；综合档位由人定）');
+    lines.push('**一句话**：' + (o.summary || '（无）'), '', '**综合参考**：' + (L.ref === 'insufficient' ? '资料不足' : TIER_WORD[L.ref]) + '（' + (L.ref === 'hold' ? '关卡未过，暂缓' : (L.ref === 'insufficient' ? '已评维度少于三个' : '已评维度均值')) + '；综合档位由人定）');
     var wk = weakest(o.premises); lines.push('**最弱关键前提**：' + (wk ? wk.text + '（' + PREMISE_STATES.filter(function (x) { return x[0] === wk.status; })[0][1] + '）' : '无'), '');
     lines.push('## 六维', '| 维度 | 档位 | 来源 | 一句理由 | 依据 | 缺什么 | 下一步 |', '|---|---|---|---|---|---|---|');
     o.axes.forEach(function (a, i) { var mine = s.axes[i].tier; lines.push('| ' + a.name + ' | ' + TIER_WORD[L.tiers[i]] + ' | ' + (mine ? '填表人' + (a.agree === false ? '（模型建议 ' + TIER_WORD[a.suggested] + '）' : '') : '模型建议') + ' | ' + a.public_reason + ' | ' + a.reason + ' | ' + a.missing + ' | ' + a.next + ' |'); });
@@ -402,16 +420,19 @@
     buildForm();
     var sel = $('#provider');
     Object.keys(PROVIDERS).forEach(function (k) { var o = document.createElement('option'); o.value = k; o.textContent = PROVIDERS[k].name; sel.appendChild(o); });
+    function baseVal() { return ($('#base').value || '').trim().replace(/\/+$/, ''); }
     function syncProvider() {
       var p = PROVIDERS[sel.value]; $('#provider-note').textContent = p.note; $('#base-field').hidden = sel.value !== 'custom';
       $('#model').value = p.model; $('#model-list').innerHTML = '';
       var saved = null; try { saved = JSON.parse(localStorage.getItem(KEY_KEY) || 'null'); } catch (e) { }
-      if (saved && saved.provider === sel.value) { $('#key').value = saved.key || ''; $('#remember').checked = true; } else { $('#key').value = ''; $('#remember').checked = false; }
+      if (saved && saved.provider === sel.value && (sel.value !== 'custom' || saved.base === baseVal())) { $('#key').value = saved.key || ''; $('#remember').checked = true; } else { $('#key').value = ''; $('#remember').checked = false; }
     }
     try { var saved0 = JSON.parse(localStorage.getItem(KEY_KEY) || 'null'); if (saved0 && PROVIDERS[saved0.provider]) sel.value = saved0.provider; } catch (e) { }
     sel.addEventListener('change', syncProvider); syncProvider();
-    $('#remember').addEventListener('change', function () { try { if (this.checked) localStorage.setItem(KEY_KEY, JSON.stringify({ provider: sel.value, key: $('#key').value })); else localStorage.removeItem(KEY_KEY); } catch (e) { } });
-    $('#key').addEventListener('input', function () { try { if ($('#remember').checked) localStorage.setItem(KEY_KEY, JSON.stringify({ provider: sel.value, key: this.value })); } catch (e) { } });
+    $('#remember').addEventListener('change', function () { try { if (this.checked) localStorage.setItem(KEY_KEY, JSON.stringify({ provider: sel.value, base: baseVal(), key: $('#key').value })); else localStorage.removeItem(KEY_KEY); } catch (e) { } });
+    $('#key').addEventListener('input', function () { try { if ($('#remember').checked) localStorage.setItem(KEY_KEY, JSON.stringify({ provider: sel.value, base: baseVal(), key: this.value })); } catch (e) { } });
+    /* 自定义接口地址一变，密钥随之清空，避免旧密钥发往新地址 */
+    $('#base').addEventListener('input', function () { if (sel.value === 'custom') { $('#key').value = ''; $('#remember').checked = false; try { localStorage.removeItem(KEY_KEY); } catch (e) { } } });
     $$('input[name=mode]').forEach(function (r) { r.addEventListener('change', function () { $('#mode-a').classList.toggle('on', r.value === 'a' && r.checked); $('#mode-b').classList.toggle('on', r.value === 'b' && r.checked); }); });
     $$('.mode h3').forEach(function (h) { h.addEventListener('click', function () { var r = $('input', h); if (!r.checked) { r.checked = true; r.dispatchEvent(new Event('change')); } }); });
     $('#sheet').addEventListener('input', saveDraft); $('#sheet').addEventListener('change', saveDraft);
@@ -423,7 +444,7 @@
 
     $('#btn-models').addEventListener('click', function (e) {
       e.preventDefault(); var key = $('#key').value.trim(); if (!key) { status('status-a', '先填密钥。', true); return; }
-      var p = currentProvider(); if (!p.base) { status('status-a', '先填接口地址。', true); return; }
+      var p = currentProvider(); if (!validBase(p.base)) { status('status-a', '接口地址必须是 https:// 开头的服务商完整地址，且不能是本站。', true); return; }
       status('status-a', '正在读取模型列表…');
       listModels(p, key).then(function (ids) { $('#model-list').innerHTML = ids.map(function (id) { return '<option value="' + esc(id) + '">'; }).join(''); status('status-a', ids.length ? '读到 ' + ids.length + ' 个模型，在模型名框里下拉选择。' : '服务商没有返回模型列表。'); }, function (err) { status('status-a', '读取失败：' + maskErr(String(err.message || err), key), true); });
     });
@@ -433,7 +454,7 @@
       var key = $('#key').value.trim(), model = $('#model').value.trim(), p = currentProvider();
       if (!key) { status('status-a', '请填入你的 API 密钥。', true); return; }
       if (!model) { status('status-a', '请填模型名。', true); return; }
-      if (!p.base || !/^https:\/\//.test(p.base)) { status('status-a', '接口地址必须以 https:// 开头。', true); return; }
+      if (!validBase(p.base)) { status('status-a', '接口地址必须是 https:// 开头的服务商完整地址，且不能是本站。', true); return; }
       var sheet = readSheet(); var btn = $('#btn-run'); btn.disabled = true; status('status-a', '已发送给 ' + p.name + '，通常 20 到 90 秒…');
       callModel(p, key, model, PROMPT_SYSTEM, userMessage(sheet)).then(function (text) {
         try { render(sheet, parseOutput(text), text, p.name + ' · ' + model); status('status-a', '完成。'); }
