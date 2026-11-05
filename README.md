@@ -26,15 +26,19 @@ python3 -m http.server 8787 --directory site
 
 网站是纯静态文件，部署目录为 `site/`，没有构建步骤。
 
-当前使用 **Cloudflare Workers 静态资源**（Cloudflare Pages 的新版本）：`wrangler.jsonc` 里项目名为 `sealgrowth`，`assets.directory` 为 `site`。在已登录 Cloudflare 的环境里，从仓库根目录执行：
+**当前线上地址：<https://openclaw-d.github.io/sealgrowth/>（GitHub Pages，`gh-pages` 分支）。** 发布方法：把 `site/` 拆成 `gh-pages` 分支推上去，GitHub Pages 的来源设为该分支根目录。
 
 ```sh
-WRANGLER_SEND_METRICS=false npx --yes wrangler@4 deploy
+git subtree split --prefix site -b gh-pages && git push -f origin gh-pages && git branch -D gh-pages
 ```
 
-部署目录必须包含 `site/_headers`，平台会据此下发安全响应头。部署后检查 `/`、`/method.html`、`/review.html`、`/open/index.html`、`/open/prompt-v1.md` 均为 200，且带有 Content-Security-Policy、X-Content-Type-Options、Referrer-Policy、X-Frame-Options、Permissions-Policy、Cross-Origin-Opener-Policy 六个头。本地 `python3 -m http.server` 预览没有这些响应头。
+GitHub Pages 不能设响应头，所以四个页面在 `<head>` 里用 `<meta http-equiv="Content-Security-Policy">` 声明了同一份 CSP（meta 不支持 frame-ancestors）。`site/.nojekyll` 让 Pages 原样发布。
 
-其他静态托管（Netlify、Vercel、GitHub Pages、自建 Nginx）也能直接托管 `site/`，但要自行配置上述响应头。
+仓库同时带有 Cloudflare Workers 静态资源配置（`wrangler.jsonc`，`assets.directory` 为 `site`，`site/_headers` 下发六个安全头）：在已登录 Cloudflare 的环境里执行 `WRANGLER_SEND_METRICS=false npx --yes wrangler@4 deploy`。2026-11-05 该账户下所有 Worker 都返回 error 1101（账户级问题，与站点无关），所以暂以 GitHub Pages 为准。
+
+其他静态托管（Netlify、Vercel、自建 Nginx）也能直接托管 `site/`，建议按 `site/_headers` 配置响应头。
+
+部署后检查 `/`、`/method.html`、`/review.html`、`/open/index.html`、`/open/prompt-v1.md` 均为 200；本地 `python3 -m http.server` 预览没有响应头，但 meta CSP 仍然生效。
 
 评审工具页只靠浏览器直连模型服务商，不需要任何服务端。CSP 的 `connect-src` 只放行 https 和本机地址（localhost、127.0.0.1）；自定义服务商若填 http 的非本机地址，会被浏览器拦下。
 
