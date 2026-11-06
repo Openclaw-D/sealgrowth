@@ -9,7 +9,7 @@
 | 路径 | 内容 | 许可 |
 |---|---|---|
 | `site/` | 静态网站。部署的就是这个目录：无构建步骤，无外部脚本、字体或统计 | 文案 CC BY-SA 4.0，代码 Apache-2.0 |
-| `site/open/` | 方法全文 `METHOD-V3.md`、锚点 `anchors-v3.json`、提示词 `prompt-v1.md`、`review-output.schema.json`、`v3-record.schema.json`、合成样例；网站"开源文件"页直接提供下载 | 见各文件 |
+| `site/open/` | 方法全文 `METHOD-V3.md`、锚点 `anchors-v3.json`、提示词 `prompt-v1.md`、`review-output.schema.json`、`v3-record.schema.json`、合成样例；网站首页"全部开源，全部免费"一节直接提供下载 | 见各文件 |
 | `site/assets/review.js` | 自带密钥评审工具 V1 的全部逻辑（提示词、表单、直接调用、零接口解析、六维图、导出） | Apache-2.0 |
 | `tools/scoring-sheet/` | 本机打分表与创始人版 / 投资人版报告生成器。Python 3 标准库；PDF 需本机 Chrome。说明见其 [README](tools/scoring-sheet/README.md) | Apache-2.0 |
 | `examples/synthetic/` | 完全合成的 V3 样例记录（与 `site/open/` 和 `tools/scoring-sheet/data-v3/` 中的副本字节一致） | CC BY-SA 4.0 |
@@ -20,7 +20,7 @@
 python3 -m http.server 8787 --directory site
 ```
 
-打开 <http://localhost:8787/>。三个页面：首页、方法（`method.html`）、评审工具（`review.html`），加开源文件页（`open/`）。
+打开 <http://localhost:8787/>。2026-11-07 起是一页为主：首页 `index.html` 从上到下为 评审 → 方法 → 三个虚构示例 → 看好/不碰 → 我们是谁 → 全部开源全部免费 → 联系；评审工具 `review.html` 独立成页。`method.html` 与 `open/index.html` 只是跳转页（`meta refresh` + `noindex`），分别跳到 `index.html#method`、`index.html#open`；方法全文只在 `open/METHOD-V3.md`。
 
 ## 部署
 
@@ -32,27 +32,28 @@ python3 -m http.server 8787 --directory site
 git subtree split --prefix site -b gh-pages && git push -f origin gh-pages && git branch -D gh-pages
 ```
 
-GitHub Pages 不能设响应头，所以四个页面在 `<head>` 里用 `<meta http-equiv="Content-Security-Policy">` 声明了同一份 CSP（meta 不支持 frame-ancestors）。`site/.nojekyll` 让 Pages 原样发布。
+GitHub Pages 不能设响应头，所以首页和工具页在 `<head>` 里用 `<meta http-equiv="Content-Security-Policy">` 声明了同一份 CSP（meta 不支持 frame-ancestors）；两个跳转页不含脚本。`site/.nojekyll` 让 Pages 原样发布。
 
 仓库同时带有 Cloudflare Workers 静态资源配置（`wrangler.jsonc`，`assets.directory` 为 `site`，`site/_headers` 下发六个安全头）：在已登录 Cloudflare 的环境里执行 `WRANGLER_SEND_METRICS=false npx --yes wrangler@4 deploy`。2026-11-05 该账户下所有 Worker 都返回 error 1101（账户级问题，与站点无关），所以暂以 GitHub Pages 为准。
 
 其他静态托管（Netlify、Vercel、自建 Nginx）也能直接托管 `site/`，建议按 `site/_headers` 配置响应头。
 
-部署后检查 `/`、`/method.html`、`/review.html`、`/open/index.html`、`/open/prompt-v1.md` 均为 200；本地 `python3 -m http.server` 预览没有响应头，但 meta CSP 仍然生效。
+部署后检查 `/`、`/review.html`、`/method.html`、`/open/index.html`（后两者应含 refresh 并跳到首页锚点）、`/open/METHOD-V3.md` 均为 200；本地 `python3 -m http.server` 预览没有响应头，但 meta CSP 仍然生效。
 
 评审工具页只靠浏览器直连模型服务商，不需要任何服务端。CSP 的 `connect-src` 只放行 https 和本机地址（localhost、127.0.0.1）；自定义服务商若填 http 的非本机地址，会被浏览器拦下。
 
 ## 评审工具怎么保证密钥和输入不经过本站
 
 - 站点是纯静态文件，没有服务器端代码，也没有任何接口可以接收内容。
-- 密钥只放在浏览器内存里；只有你勾选"记在这个浏览器里"才写入该浏览器的 localStorage（明文），可随时取消。
+- 密钥只放在浏览器内存里；只有你勾选"记在这个浏览器里"才写入该浏览器的 localStorage（明文），可随时取消。速查表草稿自动存在本浏览器的 localStorage，点"清空"即删。
+- 方法与工具免费；你选的模型服务商可能按其价目收费。
 - 请求直接从你的浏览器发往你选择的模型服务商；页面声明 `referrer: no-referrer`，请求同样不带来源。
 - 零接口方式连请求都没有：复制提示词到任意对话产品，把它的回复贴回来解析。
 - 逻辑都在 `site/assets/review.js`，可以自己审。2026-11-05 在上海的一台电脑上实测，DeepSeek、通义千问（百炼兼容模式）、Kimi、SiliconFlow、MiniMax、Anthropic 允许浏览器跨域直连；智谱、火山方舟、OpenAI 在该网络下不行，请用零接口方式。
 
 ## 发布前核验
 
-`work/` 目录不在仓库里；发布前在本机跑三件事：Playwright 在 375 px 和 1920×1080 下打开每一页，检查无横向溢出、无控制台错误、无外部请求；比对 `site/open/prompt-v1.md` 与 `review.js` 里的提示词逐字一致、`anchors-v3.json` 与内置锚点一致；在 `tools/scoring-sheet/` 里运行 `node verify.cjs --static-only` 和 `python3 build.py --id sample-company --draft --validate-only`。
+`work/` 目录不在仓库里；发布前在本机跑三件事：Playwright 在 375 px 和 1920×1080 下打开首页与工具页、检查两个跳转页，检查无横向溢出、无控制台错误、无外部请求；比对 `site/open/prompt-v1.md` 与 `review.js` 里的提示词逐字一致、`anchors-v3.json` 与内置锚点一致；在 `tools/scoring-sheet/` 里运行 `node verify.cjs --static-only` 和 `python3 build.py --id sample-company --draft --validate-only`。
 
 ## 不公开的东西
 
