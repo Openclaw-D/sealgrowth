@@ -7,7 +7,7 @@
 <title>自带密钥评审工具 · 海豹增长 SEAL Growth</title>
 <meta name="description" content="填一份速查表，用你自己的模型（DeepSeek、通义千问、Kimi、Claude 等）按海豹增长的开源方法 V3 跑一次评审；或零接口：复制提示词到任意对话模型。密钥只留在你的浏览器。">
 <meta property="og:title" content="自带密钥评审工具 · 海豹增长">
-<meta property="og:description" content="用你自己的模型，跑同一套开源评审方法。密钥与输入不经过本站。">
+<meta property="og:description" content="开源、免费：用你自己的模型，跑同一套评审方法。密钥与输入不经过本站。">
 <meta property="og:image" content="assets/seal-mark-512.png">
 <meta name="theme-color" content="#1f1f1f">
 <meta name="referrer" content="no-referrer">
@@ -20,13 +20,15 @@
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="index.html" aria-label="海豹增长 首页">
-      <img src="assets/seal-mark-192.png" alt="" width="36" height="36">
+      <img src="assets/seal-mark-192.png" alt="" width="32" height="32">
       <b>海豹增长</b><span class="en">SEAL Growth</span>
     </a>
     <nav aria-label="站内">
       <ul>
-        <li><a href="method.html">方法</a></li>
-        <li><a href="review.html" aria-current="page">评审</a></li>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="index.html#method">方法</a></li>
+        <li><a href="index.html#cases">案例</a></li>
+        <li><a href="review.html" aria-current="page">工具</a></li>
         <li><a href="index.html#contact">联系</a></li>
       </ul>
     </nav>
@@ -42,7 +44,7 @@
       <h1 id="h-review">用你自己的模型，<br>跑同一套方法</h1>
     </div>
     <div>
-      <p class="lede">填一份速查表（5 到 10 分钟），然后二选一：在浏览器里用你自己的密钥直接调用模型服务商，或者把提示词复制到任意对话模型，再把结果贴回来。输出是六维归档建议、关键前提、关卡状态和"下一步要证明什么"，按<a href="method.html"><u>开源方法 V3</u></a>。</p>
+      <p class="lede">填一份速查表（5 到 10 分钟），然后二选一：在浏览器里用你自己的密钥直接调用模型服务商，或者把提示词复制到任意对话模型，再把结果贴回来。输出是六维归档建议、关键前提、关卡状态和"下一步要证明什么"，按<a href="index.html#method"><u>开源方法 V3</u></a>。</p>
       <dl class="kv" style="margin-top:14px">
         <dt>密钥</dt><dd>默认只存在你浏览器的内存里，刷新即忘；勾选"记住密钥"才会存进本浏览器的本地存储，取消勾选即删除。速查表草稿也只自动存在本浏览器里，点"清空"即删。本站没有服务器，收不到任何内容。</dd>
         <dt>输入</dt><dd>只发给你选择的模型服务商；用零接口方式则只发给你粘贴到的对话产品。</dd>
@@ -159,11 +161,8 @@
     <div class="result" id="result">
       <hr class="rule strong" style="margin:40px 0 28px">
       <div class="sec-head">
-        <div>
-          <div class="no">结果</div>
-          <h2 id="res-title">评审结果</h2>
-          <span class="en" id="res-meta">Result</span>
-        </div>
+        <h2 id="res-title">评审结果</h2>
+        <span class="en" id="res-meta">Result</span>
         <p class="lede" id="res-summary"></p>
       </div>
       <div class="banner">AI 辅助自评 · 未经独立核验 · 不代表海豹增长背书 · 不构成投资建议 · 不承诺融资或收益。档位由你最终决定；模型只给建议与缺口。</div>
@@ -207,18 +206,7 @@
 
 <footer>
   <div class="wrap">
-    <div>
-      <div class="big">推动中国 AGI 产业发展</div>
-      <div class="sub">促进前沿技术的真实价值更早获得认知</div>
-      <span class="en">Advance China's AGI industry · SEAL Growth · 2026</span>
-    </div>
-    <ul>
-      <li><a href="index.html">首页</a></li>
-      <li><a href="method.html">方法</a></li>
-      <li><a href="open/">开源文件</a></li>
-      <li><a href="#top">回到顶部</a></li>
-    </ul>
-    <p class="legal">海豹增长不提供资金，不收费，不以盈利为目的；不向任何人承诺回报，不公开募集资金。本页工具按原样提供，输出为 AI 辅助自评，未经独立核验，不构成投资建议。密钥与输入不经过本站。文档 CC BY-SA 4.0 · 代码 Apache-2.0。</p>
+    <p class="legal">海豹增长不提供资金，不收费，不以盈利为目的；不向任何人承诺回报，不公开募集资金。本页工具按原样提供，输出为 AI 辅助自评，未经独立核验，不构成投资建议。密钥与输入不经过本站。文档 CC BY-SA 4.0 · 代码 Apache-2.0 · <a href="index.html">首页</a> · <a href="#top">回到顶部</a></p>
   </div>
 </footer>
 
