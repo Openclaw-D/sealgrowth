@@ -21,8 +21,10 @@
 <link rel="stylesheet" href="../assets/site.css">
 <noscript><style>.mode-switch,.switch-row{display:none!important}</style></noscript>
 <script src="../assets/site.js"></script>
+<script src="../assets/story.js" defer></script>
 </head>
 <body>
+<canvas id="story" aria-hidden="true"></canvas>
 
 <header class="nav">
   <div class="wrap">
@@ -74,6 +76,8 @@
   </div>
 </section>
 
+<div class="stage" data-act="2" data-show="startup" data-labels="市场需求|商业模式|资本效率|竞争壁垒|执行能力|投资回报" aria-hidden="true"></div>
+
 <!-- startup: method -->
 <section id="method" data-show="startup" aria-labelledby="h-method">
   <div class="wrap">
@@ -100,6 +104,8 @@
     <p class="lede">最里面一圈我们亲自去看：耳机、录音卡片、手表、手环。</p>
   </div>
 </section>
+
+<div class="stage" data-act="3" data-show="startup" aria-hidden="true"></div>
 
 <!-- startup: cases -->
 <section id="cases" data-show="startup" aria-labelledby="h-cases">
@@ -174,6 +180,8 @@
   </div>
 </section>
 
+<div class="stage" data-act="2" data-show="personal" data-labels="健康|财富|创造|关系|声誉|位置" aria-hidden="true"></div>
+
 <!-- personal: example -->
 <section id="example" data-show="personal" aria-labelledby="h-example">
   <div class="wrap">
@@ -188,6 +196,8 @@
   </div>
 </section>
 
+<div class="stage" data-act="3" data-show="personal" aria-hidden="true"></div>
+
 <!-- personal: try it -->
 <section id="try" class="grey" data-show="personal" aria-labelledby="h-try">
   <div class="wrap">
@@ -196,6 +206,8 @@
     <div class="cta"><a class="btn solid" href="../review.html?t=personal&amp;lang=zh" data-tool="personal" data-tool-base="../review.html">打开评审工具 →</a></div>
   </div>
 </section>
+
+<div class="stage" data-act="4" aria-hidden="true"></div>
 
 <!-- shared: open -->
 <section id="open" aria-labelledby="h-open">
@@ -243,7 +255,11 @@
   </div>
 </section>
 
+<div class="stage" data-act="5" aria-hidden="true"></div>
+
 </main>
+
+<button type="button" id="story-toggle" class="story-toggle" hidden aria-pressed="false" aria-label="暂停动效" data-label-pause="暂停动效" data-label-play="播放动效"></button>
 
 <footer>
   <div class="wrap">

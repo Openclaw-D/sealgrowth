@@ -306,3 +306,39 @@ details.adv>summary{cursor:pointer;font-size:15px;font-weight:600}
 @media (min-width:1024px){.case-grid.one{max-width:400px}}
 .who:has(> :only-child){grid-template-columns:1fr}
 #who .judge{margin-top:32px}
+
+/* ---------- story (docs/prd-seal-story.md): only active under html.has-story, set by assets/story.js ---------- */
+#story{display:none;position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.stage{display:none}
+.story-toggle{display:none}
+html.has-story{background:#061425}
+html.has-story body{background:transparent}
+html.has-story #story{display:block}
+html.has-story main,html.has-story footer{position:relative;z-index:1}
+html.has-story .stage{display:block;height:70vh;height:70svh;touch-action:pan-y}
+html.has-story .stage[data-act="5"]{height:110vh;height:110svh}
+html.has-story main>section:not(.hero){background:transparent;padding:14px 10px}
+html.has-story main>section:not(.hero)>.wrap{background:var(--paper);border-radius:20px;padding-top:44px;padding-bottom:44px;box-shadow:0 12px 40px rgba(2,10,20,.35)}
+html.has-story main>section.grey>.wrap{background:var(--paper-2)}
+html.has-story .hero{min-height:calc(100vh - 53px);min-height:calc(100svh - 53px);display:flex;align-items:center;background:transparent}
+html.has-story .hero .wrap{width:100%}
+html.has-story .hero .mark{visibility:hidden}
+html.has-story .hero .wrap>div{background:rgba(6,20,37,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:20px;padding:24px 22px}
+html.has-story .hero h1{color:#fff}
+html.has-story .hero .lede{color:rgba(234,244,255,.92)}
+html.has-story .hero .fine,html.has-story .hero .switch-row .lab{color:rgba(234,244,255,.72)}
+html.has-story .hero .fine a{color:#fff}
+html.has-story .hero .mode-switch{border-color:rgba(255,255,255,.7);background:transparent}
+html.has-story .hero .mode-switch button{color:#eaf4ff}
+html.has-story .hero .mode-switch button[aria-pressed="true"]{background:#fff;color:var(--ink)}
+html.has-story .hero .mode-switch button:focus-visible{outline-color:#fff}
+@media (min-width:720px){html.has-story main>section:not(.hero){padding:16px 16px}html.has-story .hero .wrap>div{padding:28px 32px}}
+html.has-story .story-toggle{display:block;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.75);background:rgba(6,20,37,.72);cursor:pointer;padding:0}
+html.has-story .story-toggle[hidden]{display:none}
+.story-toggle::before,.story-toggle::after{content:"";position:absolute;top:13px;width:4px;height:14px;background:#fff;border-radius:1px}
+.story-toggle::before{left:13px}
+.story-toggle::after{left:21px}
+.story-toggle[aria-pressed="true"]::before{left:15px;width:0;height:0;background:none;border-radius:0;border-style:solid;border-width:7px 0 7px 12px;border-color:transparent transparent transparent #fff}
+.story-toggle[aria-pressed="true"]::after{display:none}
+.story-toggle:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media print{#story,.stage,.story-toggle{display:none!important}html.has-story,html.has-story body{background:#fff}html.has-story .hero .wrap>div{background:none}html.has-story .hero h1,html.has-story .hero .lede{color:var(--ink)}html.has-story .hero .fine{color:var(--muted)}html.has-story .hero .mark{visibility:visible}}

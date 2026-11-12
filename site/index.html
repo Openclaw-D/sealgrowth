@@ -21,8 +21,10 @@
 <link rel="stylesheet" href="assets/site.css">
 <noscript><style>.mode-switch,.switch-row{display:none!important}</style></noscript>
 <script src="assets/site.js"></script>
+<script src="assets/story.js" defer></script>
 </head>
 <body>
+<canvas id="story" aria-hidden="true"></canvas>
 
 <header class="nav">
   <div class="wrap">
@@ -74,6 +76,8 @@
   </div>
 </section>
 
+<div class="stage" data-act="2" data-show="startup" data-labels="Demand|Business model|Capital efficiency|Moat|Execution|Return" aria-hidden="true"></div>
+
 <!-- startup: method -->
 <section id="method" data-show="startup" aria-labelledby="h-method">
   <div class="wrap">
@@ -100,6 +104,8 @@
     <p class="lede">The inner circle is where we go and look in person: earbuds, voice recorders, watches, bands.</p>
   </div>
 </section>
+
+<div class="stage" data-act="3" data-show="startup" aria-hidden="true"></div>
 
 <!-- startup: cases -->
 <section id="cases" data-show="startup" aria-labelledby="h-cases">
@@ -174,6 +180,8 @@
   </div>
 </section>
 
+<div class="stage" data-act="2" data-show="personal" data-labels="Health|Wealth|Creation|Relationships|Reputation|Position" aria-hidden="true"></div>
+
 <!-- personal: example -->
 <section id="example" data-show="personal" aria-labelledby="h-example">
   <div class="wrap">
@@ -188,6 +196,8 @@
   </div>
 </section>
 
+<div class="stage" data-act="3" data-show="personal" aria-hidden="true"></div>
+
 <!-- personal: try it -->
 <section id="try" class="grey" data-show="personal" aria-labelledby="h-try">
   <div class="wrap">
@@ -196,6 +206,8 @@
     <div class="cta"><a class="btn solid" href="review.html?t=personal&amp;lang=en" data-tool="personal" data-tool-base="review.html">Open the tool →</a></div>
   </div>
 </section>
+
+<div class="stage" data-act="4" aria-hidden="true"></div>
 
 <!-- shared: open -->
 <section id="open" aria-labelledby="h-open">
@@ -243,7 +255,11 @@
   </div>
 </section>
 
+<div class="stage" data-act="5" aria-hidden="true"></div>
+
 </main>
+
+<button type="button" id="story-toggle" class="story-toggle" hidden aria-pressed="false" aria-label="Pause motion" data-label-pause="Pause motion" data-label-play="Play motion"></button>
 
 <footer>
   <div class="wrap">
