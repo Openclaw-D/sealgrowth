@@ -44,7 +44,7 @@
 
   /* ---------- state ---------- */
   var vw = 0, vh = 0, dpr = 1, u = 1, mob = false, narrow = false, cw = 0, ch = 0;
-  var heroB = 1, mark = { x: 0, y: 0, w: 0 }, panel = null, stages = {}, labelFont = '13px sans-serif';
+  var heroB = 1, maxY = 1e9, mark = { x: 0, y: 0, w: 0 }, panel = null, stages = {}, labelFont = '13px sans-serif';
   var quality = reduced ? 0 : 3, paused = false, frozen = null, seekTo = null, snapOnce = true;
   var clockBase = performance.now(), pauseAt = 0, clock = 0, lastClock = 0, dt = 0;
   var ptr = null, lastRipple = -1, ripples = [], bubbles = [], lastBubble = 0;
@@ -70,7 +70,7 @@
     mark = { x: mr.left + mr.width / 2, y: mr.top + y + mr.height / 2, w: mr.width };
     var pr = D.querySelector('.hero .wrap > div'); pr = pr && pr.getBoundingClientRect();
     panel = pr ? { l: pr.left - 12, r: pr.right + 12, t: pr.top + y - 12, b: pr.bottom + y + 12 } : null;
-    stages = {};
+    stages = {}; maxY = max(1, D.documentElement.scrollHeight - vh);
     var list = D.querySelectorAll('.stage');
     for (var i = 0; i < list.length; i++) {
       var el = list[i], r = el.getBoundingClientRect(); if (!r.height) continue;
@@ -94,7 +94,7 @@
       t[1] = sat(y / (.9 * heroB));
       for (k = 2; k <= 5; k++) {
         var st = stages[k]; if (!st) continue;
-        var e = st.top - vh, x = st.top + st.h - .5 * vh; t[k] = sat((y - e) / (x - e)); if (t[k] > 0) A = k;
+        var e = st.top - vh, x = stageEnd(st); t[k] = sat((y - e) / (x - e)); if (t[k] > 0) A = k;
       }
     }
     var sc = 0; for (k = 1; k <= 5; k++) sc += t[k];
@@ -104,8 +104,10 @@
   function seekY() {
     var a = seekTo.act, t = seekTo.t, st = stages[a];
     if (a === 1 || !st) return t * .9 * heroB;
-    var e = st.top - vh, x = st.top + st.h - .5 * vh; return e + t * (x - e);
+    var e = st.top - vh, x = stageEnd(st); return e + t * (x - e);
   }
+  // an act ends when its stage is half way up the screen, or at the bottom of the page if that comes first
+  function stageEnd(st) { return max(st.top - vh + 1, min(st.top + st.h - .5 * vh, maxY - 1)); }
   // focal point: as close to the viewport centre as the stage allows (stage edges +-40px)
   function focal(k, y) {
     var st = stages[k]; if (!st) return { x: vw / 2, y: vh / 2 };
