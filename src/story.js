@@ -305,11 +305,12 @@
 
   /* ---------- act 1: the pup at the night surface ---------- */
   function heroLb(a) { return lerp(64, 150, a) * u * 1.25; }
-  function act1Pos(t1, y) {
+  // the dive keeps to the side margin and ends where the first ring of act 2 starts, so the body cards never hide the pup
+  function act1Pos(t1, y, tx) {
     var wl = mark.y - y, d = ss(.3, 1, t1), bob = staticMode() ? 0 : sin(clock * TAU / 4) * 6 * u;
-    var Lb = heroLb(0), x = mark.x + (vw * .5 - mark.x) * d * .55;
+    var Lb = heroLb(0), x = lerp(mark.x, tx, ss(0, .6, d));
     var yy = lerp(wl - Lb * .08 + bob, vh * .62, d);
-    var dir = d > 0 && d < 1 ? lerp(0, .9, sin(PI * min(1, d * 1.6))) : 0;
+    var dir = d > 0 && d < 1 ? lerp(0, 1.2, sin(PI * min(1, d * 1.4))) : 0;
     return { x: x, y: yy, dir: dir, d: d, wl: wl };
   }
   function drawRipples(wl, sy) {
@@ -894,7 +895,7 @@
     g.clearRect(0, 0, vw, vh);
     updateAge(t2, t3);
     // hero position: act-1 pose, then the ring path, then the swarm leader, then the beach
-    var p1 = act1Pos(t1, y), F2 = focal(2, y), F3 = focal(3, y), F5 = focal(5, y);
+    var F2 = focal(2, y), F3 = focal(3, y), F5 = focal(5, y), p1 = act1Pos(t1, y, ringPath(0, F2).x);
     var hx = p1.x, hy = p1.y, hd = p1.dir;
     if (t2 > 0) { var q = ringPath(t2, F2), bl = ss(0, .14, t2); hx = lerp(hx, q.x, bl); hy = lerp(hy, q.y, bl); hd = bl < 1 ? lerp(hd, pathDir(t2, F2), bl) : pathDir(min(t2, .995), F2); }
     hero.x = hx; hero.y = hy; hero.dir = hd;
