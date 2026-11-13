@@ -33,6 +33,8 @@ hr.rule.strong{border-top:2px solid var(--ink)}
 .brand{display:flex;align-items:center;gap:8px;flex:0 0 auto}
 .brand img{width:30px;height:30px}
 .brand b{font-weight:600;font-size:16px;letter-spacing:.04em}
+.brand b:lang(en){font-size:14px;letter-spacing:.08em}
+.brand .en:lang(en){font-size:11px}
 .brand .en{display:none}
 .nav nav{min-width:0;flex:1 1 auto;display:flex;justify-content:flex-end}
 .nav ul{display:flex;gap:14px;font-size:14px;color:var(--ink-2);overflow-x:auto;white-space:nowrap;scrollbar-width:none;max-width:100%}
