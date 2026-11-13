@@ -1,0 +1,15 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>合成排版检查夹具</title>
+<link rel="stylesheet" href="../tokens.css"><style>
+body { margin: 24px; } .sample { margin: 16px; padding: 8px; }
+#fit { width: 280px; height: 80px; font-size: 36px; line-height: 56px; }
+#vertical { width: 120px; height: 24px; overflow: hidden; font-size: 24px; line-height: 32px; }
+#horizontal { width: 80px; height: 48px; overflow: hidden; white-space: nowrap; font-size: 24px; line-height: 32px; }
+#orphan { width: 96px; font-size: 24px; line-height: 32px; text-wrap: wrap; }
+#no-orphan { width: 96px; font-size: 24px; line-height: 32px; text-wrap: wrap; }
+</style><script src="../layout.js"></script></head><body>
+<div id="fit" class="sample">合成标题 Ag</div>
+<div id="vertical" class="sample">合成测试：这段文字真的被固定高度裁切，必须拒绝。</div>
+<div id="horizontal" class="sample">合成测试：这行文字真的超出可见宽度。</div>
+<div id="orphan" class="sample judgment-copy">甲乙丙丁戊己庚辛壬癸</div>
+<div id="no-orphan" class="sample judgment-copy">甲乙丙丁戊己庚辛壬癸子丑</div>
+</body></html>

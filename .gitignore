@@ -1,0 +1,19 @@
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+*.log
+# 打分表应用运行时产物：报告输出、编辑快照、评审草稿（真实数据永远放仓库之外）
+tools/scoring-sheet/outputs/
+tools/scoring-sheet/data-v3/*.sheet.json
+tools/scoring-sheet/data-v3/versions/
+tools/scoring-sheet/data-v3/*
+!tools/scoring-sheet/data-v3/sample-company.draft.json
+!tools/scoring-sheet/data-v3/reviewer.txt
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example

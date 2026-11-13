@@ -1,0 +1,11 @@
+{
+  "$schema": "https://unpkg.com/wrangler@4/config-schema.json",
+  "name": "sealgrowth",
+  "compatibility_date": "2025-10-01",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "site"
+  }
+}

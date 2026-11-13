@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/tokens.css">
+  <link rel="stylesheet" href="/sheet.css">
+  <script src="/sheet-model.js" defer></script>
+  <script src="/layout.js" defer></script>
+  <script src="/sheet.js" defer></script>
+  <title>打分表 · 内部 · 仅本机</title>
+</head>
+<body>
+  <main class="sheet-page">
+    <header class="sheet-header">
+      <div class="brand"><img src="/brand.png" alt="灰色海豹标志"><div><b>海豹增长</b><span>SEAL Growth</span></div></div>
+      <div class="sheet-heading"><h1>打分表 · 内部 · 仅本机</h1><p id="company-name">正在读取本机资料…</p><p id="confirmation-state" role="status">未确认对外</p></div>
+      <p class="selection-note">已按建议预选，点色块即可改</p>
+    </header>
+    <div class="sheet-body" id="editor" hidden>
+      <section class="score-panel" aria-label="六维及综合评分"><div id="axis-rows"></div><div id="overall-row"></div></section>
+      <aside class="right-panel"><section class="gates-panel"><h2>放行关卡</h2><div id="gates-editor"></div><label>关卡备注<textarea id="gates-note" rows="2" maxlength="200"></textarea></label></section>
+        <section class="risk-editor"><div class="panel-heading"><h2>风险 · 概率 × 影响</h2><span id="matrix-hint">先选问题，再点格子</span></div><div id="problem-picker" aria-label="选择要放置的问题"></div><div id="matrix-editor"></div></section>
+        <section class="financing"><h2>本轮融资</h2><div class="finance-fields"><label>金额<textarea id="round-amount" maxlength="40" rows="1"></textarea></label><label>估值<textarea id="round-valuation" maxlength="40" rows="1"></textarea></label><label>出让比例<textarea id="round-dilution" maxlength="40" rows="1"></textarea></label></div><p>未补充则按默认</p></section>
+      </aside>
+      <section class="premises-panel"><h2>关键前提</h2><div id="premises-editor"></div></section>
+      <section class="item-panels"><section class="item-panel"><h2>判断 <span id="judgments-count"></span></h2><div id="judgments-editor" class="item-fields"></div></section><section class="item-panel"><h2>问题 <span id="problems-count"></span></h2><div id="problems-editor" class="item-fields"></div></section></section>
+    </div>
+    <footer class="sheet-actions"><button id="save" class="primary" disabled><span id="save-label">保存</span></button><div class="generate-action"><button id="confirm" disabled aria-describedby="generate-reason">确认对外</button><span id="generate-reason" hidden></span></div><button id="preview" disabled>内部预览</button><div class="save-info"><p class="save-state"><span id="unsaved-dot" hidden aria-label="有未保存修改">● </span><span id="status" role="status" aria-live="polite"></span></p><div id="report-links"></div></div></footer>
+  </main>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

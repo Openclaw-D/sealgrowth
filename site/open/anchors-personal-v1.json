@@ -1,0 +1,210 @@
+{
+ "schema": "seal-growth-anchors-personal",
+ "template": "personal",
+ "template_version": "personal-v1",
+ "method_version": "V3",
+ "as_of": "2026-11-11",
+ "license": "CC-BY-SA-4.0",
+ "source": "https://openclaw-d.github.io/sealgrowth/open/personal-v1.md",
+ "question": {
+  "en": "Am I worth more in this era, measured in US dollars?",
+  "zh": "我在这个时代是否更值钱（按美元计）？"
+ },
+ "tiers": [
+  "unknown",
+  "weak",
+  "normal",
+  "strong",
+  "na"
+ ],
+ "axes": [
+  {
+   "key": "health",
+   "en": "Health",
+   "zh": "健康",
+   "ask": {
+    "en": "How many more years of high-intensity work do you have?",
+    "zh": "还能高强度工作多少年？"
+   },
+   "anchors": {
+    "en": {
+     "weak": "An untreated chronic problem, or long-term poor sleep and no exercise",
+     "normal": "Can sustain a full work week; basic check-ups done",
+     "strong": "Recorded sleep and exercise; ten-plus years of high-intensity capacity left"
+    },
+    "zh": {
+     "weak": "未治疗的慢性问题，或长期睡眠不足、不运动",
+     "normal": "能稳定撑满工作周，有基本体检",
+     "strong": "有记录的睡眠与运动，十年以上高强度余量"
+    }
+   }
+  },
+  {
+   "key": "wealth",
+   "en": "Wealth",
+   "zh": "财富",
+   "ask": {
+    "en": "How many years could you go without making a decision for money?",
+    "zh": "多少年不用为钱做决定？"
+   },
+   "anchors": {
+    "en": {
+     "weak": "Less than 6 months of runway, or decisions driven by debt",
+     "normal": "6 months to 3 years of spending, counted in US dollars",
+     "strong": "5 years or more, or assets that already produce income"
+    },
+    "zh": {
+     "weak": "跑道不足 6 个月，或被债务驱动决策",
+     "normal": "按美元计 6 个月到 3 年的支出",
+     "strong": "5 年以上，或资产已产生收入"
+    }
+   }
+  },
+  {
+   "key": "creation",
+   "en": "Creation",
+   "zh": "创造",
+   "ask": {
+    "en": "Have you made something others cannot, and can AI multiply it?",
+    "zh": "做出过别人做不出的东西吗，AI 能把它放大吗？"
+   },
+   "anchors": {
+    "en": {
+     "weak": "Nothing others can see",
+     "normal": "Shipped work with users or readers",
+     "strong": "Hard for others to copy, and already multiplied with AI"
+    },
+    "zh": {
+     "weak": "没有别人看得到的作品",
+     "normal": "有上线作品、有用户或读者",
+     "strong": "别人难以复制，且已用 AI 放大产出"
+    }
+   }
+  },
+  {
+   "key": "relationships",
+   "en": "Relationships",
+   "zh": "关系",
+   "ask": {
+    "en": "Who would act for you in a crisis?",
+    "zh": "出事时谁会替你出手？"
+   },
+   "anchors": {
+    "en": {
+     "weak": "Nobody would act for you in a crisis",
+     "normal": "A few people who have really helped you; a stable close relationship, or clarity about it",
+     "strong": "Your network brings opportunities; a stable close relationship"
+    },
+    "zh": {
+     "weak": "危机时没人会出手",
+     "normal": "有几位真正帮过你的人，亲密关系稳定或自知",
+     "strong": "关系网会带来机会，亲密关系稳定"
+    }
+   }
+  },
+  {
+   "key": "reputation",
+   "en": "Reputation",
+   "zh": "声誉",
+   "ask": {
+    "en": "Can a stranger verify that your judgment has been right?",
+    "zh": "陌生人查得到你判断对过吗？"
+   },
+   "anchors": {
+    "en": {
+     "weak": "Nothing verifiable can be found online",
+     "normal": "A public record of work",
+     "strong": "Public, dated, verifiable judgments or work, cited by strangers"
+    },
+    "zh": {
+     "weak": "网上查不到任何可验证的东西",
+     "normal": "有公开的作品记录",
+     "strong": "公开、带日期、可验证的判断或作品，有陌生人引用"
+    }
+   }
+  },
+  {
+   "key": "position",
+   "en": "Position",
+   "zh": "位置",
+   "ask": {
+    "en": "Who pays you, and could you switch?",
+    "zh": "谁付你钱，你换得了吗？"
+   },
+   "anchors": {
+    "en": {
+     "weak": "One payer, one market, skills that do not transfer",
+     "normal": "Skills that work across markets",
+     "strong": "More than one payer or market; can work remotely or move"
+    },
+    "zh": {
+     "weak": "单一付款方、单一市场、技能不可迁移",
+     "normal": "技能可跨市场",
+     "strong": "不止一个付款方或市场，可远程或迁移"
+    }
+   }
+  }
+ ],
+ "gates": [
+  {
+   "key": "health",
+   "en": "Health needs attention first",
+   "zh": "健康需要先处理"
+  }
+ ],
+ "gate_rule": {
+  "en": "If the health gate is block, or the health dimension is weak, the overall is hold. Unchecked is not a pass.",
+  "zh": "健康关卡为阻断，或健康维度为弱点，综合为暂缓。未核查不等于通过。"
+ },
+ "evidence": [
+  {
+   "key": "self",
+   "en": "Self-reported",
+   "zh": "自述"
+  },
+  {
+   "key": "doc",
+   "en": "Recorded",
+   "zh": "有记录"
+  },
+  {
+   "key": "verified",
+   "en": "Verifiable by others",
+   "zh": "他人可核验"
+  }
+ ],
+ "reference": {
+  "weights": {
+   "weak": 1,
+   "normal": 2,
+   "strong": 3
+  },
+  "rounding": "half-up",
+  "min_rated_axes": 3,
+  "below_min": {
+   "en": "Insufficient",
+   "zh": "资料不足"
+  },
+  "note": {
+   "en": "Reference only; a person decides the overall",
+   "zh": "只做参考，综合由人定"
+  }
+ },
+ "outlook": {
+  "as_of": "2027-11-11",
+  "values": [
+   "holds",
+   "at_risk",
+   "unknown",
+   "na"
+  ],
+  "note": {
+   "en": "Dated forecast, not a fact; never changes a tier",
+   "zh": "注明日期的预判，不是事实，不改变档位"
+  }
+ },
+ "disclaimer": {
+  "en": "AI-assisted self-review · not independently verified · not investment advice · not career advice",
+  "zh": "AI 辅助自评 · 未经独立核验 · 不构成投资建议 · 不构成职业建议"
+ }
+}

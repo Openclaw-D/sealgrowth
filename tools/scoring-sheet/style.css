@@ -1,0 +1,130 @@
+* { box-sizing:border-box; text-wrap:pretty; }
+html,body { margin:0; padding:0; width:100%; background:var(--gray-0); }
+body { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+[hidden] { display:none !important; }
+.report-page { --type-body:18px; --type-label:18px; --type-large:18px; --type-heading:22px; --type-title:26px; --type-caption:14px; --leading-item:25px; --leading-meta:24px;
+  position:relative; width:100%; max-width:720px; margin-inline:auto; padding:16px; display:grid; grid-template-columns:minmax(0,1fr); gap:20px; font-size:var(--type-body); line-height:var(--leading-meta); }
+.report-page > *, .column > *, .report-item > *, .brand > * { min-width:0; }
+.column > *, .item-list > *, .stage-funds > * { flex-shrink:0; }
+.report-header { grid-area:header; display:grid; grid-template-columns:minmax(0,1fr) max-content; align-items:center; gap:8px; border-bottom:1px solid var(--gray-400); padding-bottom:12px; }
+.brand { display:flex; align-items:center; gap:8px; }
+.brand img { width:64px; height:48px; object-fit:contain; filter:grayscale(1); }
+.brand-cn { font-size:22px; font-weight:800; line-height:28px; }
+.brand-en { font-size:16px; color:var(--gray-600); line-height:24px; }
+.company-title { grid-column:1/-1; grid-row:2; font-size:var(--type-title); font-weight:800; line-height:1.4; margin:0; overflow-wrap:anywhere; }
+.header-meta { display:flex; flex-direction:column; align-items:flex-end; }
+.as-of { font-size:var(--type-caption); white-space:nowrap; }
+.audience-label { font-size:var(--type-caption); color:var(--gray-600); }
+.top-strip { grid-area:strip; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border:1px solid var(--gray-500); border-radius:var(--radius-card); }
+.top-cell { padding:10px 12px; display:flex; align-items:baseline; gap:8px; font-size:var(--type-large); line-height:1.5; min-width:0; }
+.top-business,.top-round { grid-column:1/-1; }
+.top-business { border-bottom:1px solid var(--gray-400); }
+.top-stage { grid-row:3; border-top:1px solid var(--gray-400); }
+.top-cell:last-child { grid-row:3; border-left:1px solid var(--gray-400); border-top:1px solid var(--gray-400); }
+.top-key { font-weight:800; flex-shrink:0; }
+.top-value { min-width:0; overflow-wrap:anywhere; }
+.top-stage .top-value { white-space:nowrap; } /* CC 2026-11-03：阶段词最长四字，不折行 */
+.round-line { display:block; }
+.muted,.fund-unknown { color:var(--gray-600); }
+.column { min-width:0; display:flex; flex-direction:column; gap:12px; }
+.judgments-column { grid-area:judgments; }
+.problems-column { grid-area:problems; }
+.column h2 { font-size:var(--type-heading); line-height:1.4; margin:0; padding:8px 12px; font-weight:800; background:var(--gray-200); border-radius:var(--radius-chip); }
+.item-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:20px; }
+.report-item { display:grid; grid-template-columns:28px minmax(0,1fr); gap:8px; align-items:start; position:relative; }
+.report-item:not(:last-child)::after { content:""; position:absolute; height:1px; left:0; right:0; bottom:var(--separator-offset,-10px); background:var(--gray-300); }
+.item-number { font-size:var(--type-body); font-weight:750; border:1px solid var(--gray-600); width:26px; min-height:28px; line-height:26px; text-align:center; }
+.judgment-copy,.problem-copy { font-size:var(--type-label); font-weight:650; line-height:var(--leading-item); margin:0; }
+.judgment-meta,.verify-copy,.deadline-copy { font-size:var(--type-body); line-height:var(--leading-meta); color:var(--gray-600); margin:0; }
+.judgment-copy,.problem-copy,.verify-copy,.deadline-copy { white-space:pre-wrap; overflow-wrap:anywhere; }
+.source-refs { font-size:inherit; color:inherit; font-weight:450; }
+.stage-funds { display:flex; flex-direction:column; gap:8px; margin-top:4px; }
+.stage-bar { display:flex; flex-wrap:wrap; gap:4px; align-items:stretch; }
+.stage { flex:1 0 auto; display:flex; align-items:center; justify-content:center; text-align:center; padding:4px; font-size:var(--type-body); line-height:1.4; background:var(--gray-200); border-radius:6px; }
+.stage[data-current="true"] { background:var(--gray-900); color:var(--gray-0); font-weight:750; }
+.fund-bar { min-height:32px; display:flex; background:var(--gray-100); border-radius:var(--radius-chip); }
+.fund-segment { display:flex; justify-content:center; align-items:center; min-width:0; flex-shrink:1; font-size:var(--type-body); font-weight:650; border-right:2px solid var(--gray-0); }
+.fund-label { white-space:nowrap; }
+.fund-segment:first-child { border-radius:var(--radius-chip) 0 0 var(--radius-chip); }
+.fund-segment:last-child { border:0; border-radius:0 var(--radius-chip) var(--radius-chip) 0; }
+.fund-legend { display:flex; flex-wrap:wrap; gap:4px 12px; font-size:var(--type-body); }
+.fund-legend:empty { display:none; }
+.fund-legend-entry { display:inline-flex; align-items:center; gap:6px; min-width:0; }
+.fund-swatch { display:inline-block; width:16px; height:16px; flex-shrink:0; border:1px solid var(--gray-400); }
+.fund-legend-label { overflow-wrap:anywhere; }
+.no-orphan { white-space:nowrap; word-break:keep-all; } /* CC 2026-11-03：全局 text-wrap:pretty 下 Chrome 仍会在 nowrap 行内拆开中日韩字，keep-all 去掉这些断点 */
+.report-footer { grid-area:footer; margin:0; border-top:1px solid var(--gray-400); padding-top:4px; font-size:var(--type-caption); line-height:1.5; color:var(--gray-600); overflow-wrap:anywhere; }
+.preview-footer { display:block; }
+/* CC 2026-11-03：浅色小水印，不参与排版，不挡点击 */
+.confidential-marks { position:absolute; inset:0; pointer-events:none; z-index:4; }
+.confidential-mark { position:absolute; display:flex; flex-direction:column; align-items:center; gap:2px; transform:translate(-50%,-50%) rotate(-18deg); white-space:nowrap; font-size:13px; line-height:1.25; font-weight:700; letter-spacing:.2em; color:rgba(0,0,0,.075); }
+.confidential-mark img { width:30px; height:auto; opacity:.11; }
+.confidential-mark[data-set="wide"] { display:none; }
+@media screen and (min-width:1024px) { .confidential-mark[data-set="wide"] { display:flex; } .confidential-mark[data-set="tall"] { display:none; } }
+html[data-print-layout="landscape"] .confidential-mark[data-set="wide"], html[data-print-layout="portrait"] .confidential-mark[data-set="tall"] { display:flex; }
+html[data-print-layout="landscape"] .confidential-mark[data-set="tall"], html[data-print-layout="portrait"] .confidential-mark[data-set="wide"] { display:none; }
+html[data-print-layout="landscape"] .confidential-mark { font-size:16px; }
+html[data-print-layout="landscape"] .confidential-mark img { width:38px; }
+@page { size:1920px 1080px; margin:0; }
+@media print {
+  * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  html[data-print-layout="portrait"] { width:1080px; }
+  html[data-print-layout="portrait"] body { width:430px; zoom:2.511627906976744; }
+  html[data-print-layout="portrait"] .report-page { width:430px; max-width:none; margin:0; }
+}
+
+@media screen and (min-width:1024px) {
+
+.report-page { --type-body:clamp(18px,1.25vw,24px); --type-label:clamp(18px,1.458333vw,28px); --type-large:clamp(18px,1.666667vw,32px); --type-heading:clamp(24px,1.875vw,36px); --type-title:clamp(26px,2.291667vw,44px); --type-caption:16px; --leading-item:calc(var(--type-label)*9/7); --leading-meta:calc(var(--type-body)*4/3); max-width:none; padding:8px 24px; min-height:1080px; column-gap:16px; row-gap:4px; }
+.report-header { grid-template-columns:minmax(240px,336px) minmax(0,1fr) max-content; min-height:88px; padding-bottom:8px; }
+.brand { gap:16px; }
+.brand img { width:96px; height:72px; }
+.brand-cn { font-size:var(--type-heading); line-height:44px; }
+.brand-en { font-size:var(--type-body); line-height:32px; }
+.company-title { grid-column:auto; grid-row:auto; text-align:center; }
+.as-of { font-size:var(--type-label); font-weight:650; }
+.header-meta { padding-left:16px; border-left:1px solid var(--gray-400); }
+.top-strip { grid-template-columns:1.45fr max-content 1.8fr .75fr; } /* CC 2026-11-03：阶段列按内容定宽，避免“原理验证”折行 */
+.top-cell,.top-cell:last-child { grid-column:auto; grid-row:auto; padding:8px 16px; align-items:center; line-height:1.25; border:0; }
+.top-cell + .top-cell { border-left:1px solid var(--gray-400); }
+.column { gap:8px; min-height:0; }
+.column:not(.judgments-column) { border-left:1px solid var(--gray-400); padding-left:12px; }
+.column h2 { line-height:44px; padding:4px 12px; }
+.item-list { gap:8px; }
+.report-item { grid-template-columns:36px minmax(0,1fr); gap:8px; }
+.report-item:not(:last-child)::after { bottom:var(--separator-offset,-4px); }
+.item-number { width:32px; min-height:36px; line-height:34px; font-size:var(--type-label); }
+.stage-funds { margin-top:0; }
+.stage { padding:4px; line-height:32px; }
+.fund-bar { min-height:40px; }
+.report-footer { line-height:24px; }
+}
+
+@media print {
+
+html[data-print-layout="landscape"] .report-page { --type-body:clamp(18px,1.25vw,24px); --type-label:clamp(18px,1.458333vw,28px); --type-large:clamp(18px,1.666667vw,32px); --type-heading:clamp(24px,1.875vw,36px); --type-title:clamp(26px,2.291667vw,44px); --type-caption:16px; --leading-item:calc(var(--type-label)*9/7); --leading-meta:calc(var(--type-body)*4/3); max-width:none; padding:8px 24px; min-height:1080px; column-gap:16px; row-gap:4px; }
+html[data-print-layout="landscape"] .report-header { grid-template-columns:minmax(240px,336px) minmax(0,1fr) max-content; min-height:88px; padding-bottom:8px; }
+html[data-print-layout="landscape"] .brand { gap:16px; }
+html[data-print-layout="landscape"] .brand img { width:96px; height:72px; }
+html[data-print-layout="landscape"] .brand-cn { font-size:var(--type-heading); line-height:44px; }
+html[data-print-layout="landscape"] .brand-en { font-size:var(--type-body); line-height:32px; }
+html[data-print-layout="landscape"] .company-title { grid-column:auto; grid-row:auto; text-align:center; }
+html[data-print-layout="landscape"] .as-of { font-size:var(--type-label); font-weight:650; }
+html[data-print-layout="landscape"] .header-meta { padding-left:16px; border-left:1px solid var(--gray-400); }
+html[data-print-layout="landscape"] .top-strip { grid-template-columns:1.45fr max-content 1.8fr .75fr; }
+html[data-print-layout="landscape"] .top-cell,html[data-print-layout="landscape"] .top-cell:last-child { grid-column:auto; grid-row:auto; padding:8px 16px; align-items:center; line-height:1.25; border:0; }
+html[data-print-layout="landscape"] .top-cell + .top-cell { border-left:1px solid var(--gray-400); }
+html[data-print-layout="landscape"] .column { gap:8px; min-height:0; }
+html[data-print-layout="landscape"] .column:not(.judgments-column) { border-left:1px solid var(--gray-400); padding-left:12px; }
+html[data-print-layout="landscape"] .column h2 { line-height:44px; padding:4px 12px; }
+html[data-print-layout="landscape"] .item-list { gap:8px; }
+html[data-print-layout="landscape"] .report-item { grid-template-columns:36px minmax(0,1fr); gap:8px; }
+html[data-print-layout="landscape"] .report-item:not(:last-child)::after { bottom:var(--separator-offset,-4px); }
+html[data-print-layout="landscape"] .item-number { width:32px; min-height:36px; line-height:34px; font-size:var(--type-label); }
+html[data-print-layout="landscape"] .stage-funds { margin-top:0; }
+html[data-print-layout="landscape"] .stage { padding:4px; line-height:32px; }
+html[data-print-layout="landscape"] .fund-bar { min-height:40px; }
+html[data-print-layout="landscape"] .report-footer { line-height:24px; }
+html[data-print-layout="landscape"], html[data-print-layout="landscape"] body { width:1920px; height:1080px; }
+html[data-print-layout="landscape"] .report-page { width:1920px; height:1080px; min-height:0; --type-body:24px; --type-label:28px; --type-large:32px; --type-heading:36px; --type-title:44px; --type-caption:16px; }
+}

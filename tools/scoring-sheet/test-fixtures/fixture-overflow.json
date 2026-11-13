@@ -1,0 +1,308 @@
+{
+  "meta": {
+    "version": "V3",
+    "as_of": "2026-11-05",
+    "brand_cn": "海豹增长",
+    "brand_en": "SEAL Growth",
+    "fa_disclosure": "合成示例，仅演示评审方法，无实际融资委托。",
+    "disclaimer": "全部人物、客户、数字与来源均为合成。本工具按原样提供，不构成投资建议。"
+  },
+  "company": {
+    "id": "fixture-overflow",
+    "name": "合成测试企业（不存在）",
+    "sector": "工业视觉检测（虚构）",
+    "business": "虚构样机识别合成工件图像；合成客户甲不存在。",
+    "stage": "样机",
+    "round": {
+      "name": "合成演示轮",
+      "amount": "合成 17 示例单位",
+      "valuation": "合成 85 示例单位",
+      "dilution": "合成 20%（演示）"
+    },
+    "fund_use": [
+      {
+        "label": "合成样机",
+        "pct": 50
+      },
+      {
+        "label": "合成验证",
+        "pct": 30
+      },
+      {
+        "label": "合成协作",
+        "pct": 20
+      }
+    ]
+  },
+  "analysis": {
+    "summary": "内部合成分析摘要哨兵",
+    "macro": [
+      {
+        "text": "内部合成宏观分析哨兵",
+        "evidence": "推断",
+        "sources": [
+          1
+        ],
+        "effect": "需求"
+      }
+    ],
+    "meso": [
+      {
+        "text": "内部合成行业分析哨兵",
+        "evidence": "推断",
+        "sources": [
+          1
+        ]
+      }
+    ],
+    "micro": [
+      {
+        "text": "内部合成企业分析哨兵",
+        "evidence": "推断",
+        "sources": [
+          1
+        ]
+      }
+    ],
+    "chain": [
+      "内部合成因果链条哨兵"
+    ],
+    "cash": {
+      "runway_months": null,
+      "note": "内部合成现金分析哨兵"
+    },
+    "terms": {
+      "note": "内部合成条款分析哨兵"
+    },
+    "requests": [
+      "补充合成测试材料"
+    ]
+  },
+  "axes": [
+    {
+      "name": "市场需求",
+      "suggested": "unknown",
+      "level": "unknown",
+      "reason": "内部合成依据哨兵第1项",
+      "next": "内部合成下一步哨兵第1项",
+      "public_reason": "合成公开理由第1项",
+      "confidence": "low"
+    },
+    {
+      "name": "商业模式",
+      "suggested": "weak",
+      "level": "weak",
+      "reason": "内部合成依据哨兵第2项",
+      "next": "内部合成下一步哨兵第2项",
+      "public_reason": "合成公开理由第2项",
+      "confidence": "low"
+    },
+    {
+      "name": "资本效率",
+      "suggested": "normal",
+      "level": "normal",
+      "reason": "内部合成依据哨兵第3项",
+      "next": "内部合成下一步哨兵第3项",
+      "public_reason": "合成公开理由第3项",
+      "confidence": "low"
+    },
+    {
+      "name": "竞争壁垒",
+      "suggested": "strong",
+      "level": "strong",
+      "reason": "内部合成依据哨兵第4项",
+      "next": "内部合成下一步哨兵第4项",
+      "public_reason": "合成公开理由第4项",
+      "confidence": "low"
+    },
+    {
+      "name": "执行能力",
+      "suggested": "normal",
+      "level": "normal",
+      "reason": "内部合成依据哨兵第5项",
+      "next": "内部合成下一步哨兵第5项",
+      "public_reason": "合成公开理由第5项",
+      "confidence": "low"
+    },
+    {
+      "name": "投资回报",
+      "suggested": "strong",
+      "level": "strong",
+      "reason": "内部合成依据哨兵第6项",
+      "next": "内部合成下一步哨兵第6项",
+      "public_reason": "合成公开理由第6项",
+      "confidence": "low"
+    }
+  ],
+  "overall": {
+    "level": "normal"
+  },
+  "premises": [
+    {
+      "id": 1,
+      "text": "合成前提第1项仅供验证流程",
+      "status": "partial",
+      "critical": true,
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "text": "合成前提第2项仅供验证流程",
+      "status": "unverified",
+      "critical": true,
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "text": "合成前提第3项仅供验证流程",
+      "status": "unverified",
+      "critical": true,
+      "sources": [
+        1
+      ]
+    }
+  ],
+  "gates": {
+    "fraud": "unchecked",
+    "tech": "unchecked",
+    "cash": "unchecked",
+    "integrity": "unchecked",
+    "note": ""
+  },
+  "judgments": [
+    {
+      "id": 11,
+      "text": "合成溢出判断第1项仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边",
+      "external": true,
+      "evidence": "公司自述",
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": 22,
+      "text": "合成溢出判断第2项仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边界测试仅用于合成边",
+      "external": true,
+      "evidence": "公司自述",
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": 33,
+      "text": "合成判断第3项仅供渲染测试",
+      "external": true,
+      "evidence": "公司自述",
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": 44,
+      "text": "合成判断第4项仅供渲染测试",
+      "external": true,
+      "evidence": "公司自述",
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": 55,
+      "text": "合成判断第5项仅供渲染测试",
+      "external": true,
+      "evidence": "公司自述",
+      "sources": [
+        1
+      ]
+    }
+  ],
+  "problems": [
+    {
+      "id": 11,
+      "text": "合成问题第1项仅供流程测试",
+      "external": true,
+      "sources": [
+        1
+      ],
+      "verify": "核对合成演示记录",
+      "by": "合成期内",
+      "pass": "合成检查完成",
+      "likelihood": 3,
+      "impact": 2
+    },
+    {
+      "id": 22,
+      "text": "合成问题第2项仅供流程测试",
+      "external": true,
+      "sources": [
+        1
+      ],
+      "verify": "核对合成演示记录",
+      "by": "合成期内",
+      "pass": "合成检查完成",
+      "likelihood": 3,
+      "impact": 2
+    },
+    {
+      "id": 33,
+      "text": "合成问题第3项仅供流程测试",
+      "external": true,
+      "sources": [
+        1
+      ],
+      "verify": "核对合成演示记录",
+      "by": "合成期内",
+      "pass": "合成检查完成",
+      "likelihood": 3,
+      "impact": 2
+    },
+    {
+      "id": 44,
+      "text": "合成问题第4项仅供流程测试",
+      "external": true,
+      "sources": [
+        1
+      ],
+      "verify": "核对合成演示记录",
+      "by": "合成期内",
+      "pass": "合成检查完成",
+      "likelihood": 3,
+      "impact": 2
+    },
+    {
+      "id": 55,
+      "text": "合成问题第5项仅供流程测试",
+      "external": true,
+      "sources": [
+        1
+      ],
+      "verify": "核对合成演示记录",
+      "by": "合成期内",
+      "pass": "合成检查完成",
+      "likelihood": 1,
+      "impact": 1
+    }
+  ],
+  "card": {
+    "founder": "合成角色甲（非真实人物）",
+    "team": "合成角色乙、丙（均不存在）",
+    "business": "虚构样机识别合成工件图像；合成客户甲不存在。",
+    "vision": "用虚构样机演示工业视觉检测。",
+    "vision_source": "合成示例：演示脚本"
+  },
+  "sources": [
+    {
+      "id": 1,
+      "short": "合成示例：公开测试来源"
+    },
+    {
+      "id": 6,
+      "short": "合成示例：未引用测试来源"
+    }
+  ],
+  "internal_notes": "内部备注秘密哨兵行人辰长"
+}
