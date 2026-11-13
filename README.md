@@ -72,3 +72,5 @@ GitHub Pages 不能设响应头，所以两个首页和工具页在 `<head>` 里
 文档按 CC BY-SA 4.0（见 `LICENSE-DOCS`），代码按 Apache-2.0（见 `LICENSE-CODE`）。海豹图形与"海豹增长 / SEAL Growth"名称只用于标识本项目，不在许可范围内，请勿用于暗示背书。`tools/scoring-sheet/EquivalentUnifiedIdeograph-18.0.0.txt` 为 Unicode 数据文件，保留原始许可声明。
 
 首页动画（`site/assets/story.js`）里的地球陆地点，来自 Natural Earth 1:110m 国家边界数据（公有领域，naturalearthdata.com），合并后按 2 度栅格化，不含国界和地名。动画里的海豹和亮点只是示意，不对应真实项目、地点或数量。可读源码在 `src/story.js`；`site/assets/story.js` 是去掉注释、缩短变量名后的发布版，两者行为相同。
+
+`assets/tex` 里的纹理是生成的图像，处理成可平铺的细节图，没有使用第三方照片。

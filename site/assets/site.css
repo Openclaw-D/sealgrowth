@@ -307,6 +307,26 @@ details.adv>summary{cursor:pointer;font-size:15px;font-weight:600}
 .who:has(> :only-child){grid-template-columns:1fr}
 #who .judge{margin-top:32px}
 
+
+/* Static score sheets and priorities (also available without JavaScript). */
+.score-sheet{width:100%;table-layout:fixed;border-collapse:collapse;margin:24px 0;color:#1f1f1f;font-size:14px;line-height:1.5}
+.score-sheet caption{text-align:left;font-weight:700;font-size:16px;margin-bottom:10px}
+.score-sheet th,.score-sheet td{border:1px solid #d0d3d6;padding:9px 8px;text-align:left;vertical-align:middle;overflow-wrap:anywhere}
+.score-sheet thead th{background:#eef0f1;font-weight:600}
+.score-sheet tbody th{font-weight:600}
+.score-sheet a{text-decoration:underline;text-underline-offset:3px}
+.score-sheet .score-tier{border-left:5px solid var(--tier);background:var(--wash);color:#1f1f1f}
+.tier-strong{--tier:#2e8b3e;--wash:#b6d6bb}.tier-normal{--tier:#f2c200;--wash:#faeaa6}.tier-weak{--tier:#d93025;--wash:#f2b7b3}.tier-unknown{--tier:#6b3fa0;--wash:#cbbcdc}.tier-na{--tier:#9aa0a6;--wash:#dcdedf}
+.score-sheet .tier-hold{--tier:#1f1f1f;background:#1f1f1f;color:#fff}
+.score-rules th:first-child{width:23%}.score-rules th:nth-child(2){width:24%}.score-cases th:first-child{width:26%}
+.score-notes{font-size:14px;line-height:1.65;margin:0 0 24px}.score-notes p{margin:6px 0}
+#who .pod{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;max-width:760px;margin-left:auto;margin-right:auto}
+#who .pod li{position:relative;padding:12px 6px;border-top:1px solid #d0d3d6}
+#who .pod li:first-child{grid-column:1/-1;border-top:2px solid #1f1f1f;padding:22px 0;background:#f4f5f3}
+#who .pod li:first-child img{width:96px;height:96px}#who .pod li:first-child b{font-size:24px}
+#who .pod b{font-size:16px}#who .pod span{color:#4a4f54;font-size:13px}#who .pod .pod-order{font-size:13px;margin-bottom:8px;color:#1f1f1f}
+@media(max-width:719px){.score-sheet{font-size:13px}.score-sheet th,.score-sheet td{padding:8px 5px}.score-cases th:first-child{width:25%}#who .pod{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 /* ---------- story (docs/prd-seal-story.md): only active under html.has-story, set by assets/story.js ---------- */
 #story{display:none;position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .stage{display:none}
@@ -315,7 +335,8 @@ html.has-story{background:#061425}
 html.has-story body{background:transparent}
 html.has-story #story{display:block}
 html.has-story main,html.has-story footer{position:relative;z-index:1}
-html.has-story .stage{display:block;height:70vh;height:70svh;touch-action:pan-y}
+html.has-story .stage{display:block;height:80vh;height:80svh;touch-action:pan-y}
+html.has-story .stage[data-act="4"]{height:90vh;height:90svh}
 html.has-story .stage[data-act="5"]{height:110vh;height:110svh}
 html.has-story main>section:not(.hero){background:transparent;padding:14px 10px}
 html.has-story main>section:not(.hero)>.wrap{background:var(--paper);border-radius:20px;padding-top:44px;padding-bottom:44px;box-shadow:0 12px 40px rgba(2,10,20,.35)}
@@ -342,3 +363,14 @@ html.has-story .story-toggle[hidden]{display:none}
 .story-toggle[aria-pressed="true"]::after{display:none}
 .story-toggle:focus-visible{outline:2px solid #fff;outline-offset:2px}
 @media print{#story,.stage,.story-toggle{display:none!important}html.has-story,html.has-story body{background:#fff}html.has-story .hero .wrap>div{background:none}html.has-story .hero h1,html.has-story .hero .lede{color:var(--ink)}html.has-story .hero .fine{color:var(--muted)}html.has-story .hero .mark{opacity:1}}
+
+@media(max-width:719px){
+ html.has-story .hero{margin-bottom:35vh;margin-bottom:35svh}
+ html.has-story .stage[data-act="2"],html.has-story .stage[data-act="4"],html.has-story .stage[data-act="5"]{height:120vh;height:120svh}
+ html.has-story .stage[data-act="3"]{height:110vh;height:110svh}
+}
+
+/* The explicit static view matches the no-script presentation. */
+html.story-off .mode-switch,html.story-off .switch-row{display:none!important}
+
+@media(max-width:719px){.score-cases .overall-line{display:block;white-space:nowrap}}
