@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src https: http://localhost:* http://127.0.0.1:*; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Review tool · SEAL Growth</title>
+<meta name="description" content="Paste your deck text or fill a short sheet, copy the prompt into your own chat model, and get a six-dimension review by the open SEAL Growth method. Startup and personal templates, English and Chinese. No key needed; nothing passes through this site.">
+<meta property="og:title" content="Review tool · SEAL Growth">
+<meta property="og:description" content="Free and open: run the same review method with your own model. No key needed by default; nothing passes through this site.">
+<meta property="og:image" content="assets/seal-mark-512.png">
+<meta name="theme-color" content="#1f1f1f">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" type="image/png" href="assets/seal-mark-192.png">
+<link rel="apple-touch-icon" href="assets/seal-mark-192.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" data-home="" aria-label="SEAL Growth">
+      <img src="assets/seal-mark-192.png" alt="" width="32" height="32">
+      <b>SEAL Growth</b><span class="en">海豹增长</span>
+    </a>
+    <nav aria-label="Site">
+      <ul>
+        <li class="wide-only"><a href="index.html#method" data-home="#method" data-i18n="nav.method">Method</a></li>
+        <li class="wide-only"><a href="index.html#cases" data-home="#cases" data-i18n="nav.cases">Cases</a></li>
+        <li><a href="review.html" aria-current="page" data-i18n="nav.tool">Tool</a></li>
+        <li><a href="index.html#contact" data-home="#contact" data-i18n="nav.contact">Contact</a></li>
+        <li><button type="button" class="lang-btn" id="lang-toggle" data-i18n="nav.lang" data-i18n-aria="nav.lang.aria" aria-label="Switch to Chinese">中文</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="page-head" aria-labelledby="h-review">
+  <div class="wrap">
+    <div>
+      <div class="en eyebrow">Tool · V0.5</div>
+      <h1 id="h-review" data-i18n="head.h1">Run the same method with your own model</h1>
+    </div>
+    <div>
+      <p class="lede" data-i18n="head.lede">Paste your text or fill in a short sheet, copy the prompt into your own chat model, then paste its answer back.</p>
+      <dl class="kv" style="margin-top:14px">
+        <dt data-i18n="head.key">Key</dt><dd data-i18n="head.key.d">Not needed by default.</dd>
+        <dt data-i18n="head.input">Input</dt><dd data-i18n="head.input.d">Goes only to the chat product you paste into, or the provider you pick.</dd>
+        <dt data-i18n="head.code">Code</dt><dd data-i18n-html="head.code.d">All logic is in <code>assets/review.js</code>, open source.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<noscript><div class="wrap"><p class="banner">This tool needs JavaScript. The prompt is also published as plain text: <a href="open/prompt-v2.md"><u>open/prompt-v2.md</u></a>. 本工具需要 JavaScript；提示词原文见 open/prompt-v2.md。</p></div></noscript>
+
+<section aria-label="Review tool" style="padding-top:36px">
+  <div class="wrap">
+    <div class="tpl-bar">
+      <span class="lab" data-i18n="tpl.label">Template</span>
+      <div class="mode-switch" role="group" aria-label="Template">
+        <button type="button" data-tpl="startup" aria-pressed="true" data-i18n="tpl.startup">Startup</button>
+        <button type="button" data-tpl="personal" aria-pressed="false" data-i18n="tpl.personal">Personal</button>
+      </div>
+    </div>
+    <div class="banner" data-i18n="banner">AI-assisted self-review. Not independently verified, not investment advice.</div>
+
+    <div class="tool">
+      <form id="sheet" class="main" novalidate>
+        <div class="card">
+          <h3 data-i18n="h.ctx">1. Context</h3>
+          <p class="hint" data-i18n="hint.ctx"></p>
+          <div id="ctx"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3 data-i18n="h.deck">2. Paste your text</h3>
+          <p class="hint" data-i18n="hint.deck"></p>
+          <div class="field"><label for="f-deck" id="deck-label">Deck or memo text (optional)</label><textarea id="f-deck" name="deck" maxlength="20000" class="tall"></textarea></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3 data-i18n="h.axes">3. Six dimensions</h3>
+          <p class="hint" data-i18n="hint.axes"></p>
+          <div id="axes"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3 data-i18n="h.gates">4. Gates</h3>
+          <p class="hint" data-i18n="hint.gates"></p>
+          <div id="gates"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3 data-i18n="h.premises">5. Key premises</h3>
+          <p class="hint" data-i18n="hint.premises"></p>
+          <div id="premises"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3 data-i18n="h.extra">6. Notes</h3>
+          <div id="extra"></div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn small" id="btn-sample" data-i18n="btn.sample">Fill a synthetic sample</button>
+          <button type="button" class="btn small" id="btn-clear" data-i18n="btn.clear">Clear</button>
+          <button type="button" class="btn small" id="btn-copy-sheet" data-i18n="btn.copysheet">Copy sheet (Markdown)</button>
+        </div>
+      </form>
+
+      <aside class="side">
+        <div class="card">
+          <h3 data-i18n="run.h">Run</h3>
+          <p class="hint" data-i18n="run.hint"></p>
+          <label class="consent"><input type="checkbox" id="consent"><span data-i18n="consent"></span></label>
+
+          <div class="modes" style="margin-top:14px">
+            <div class="mode on" id="mode-b">
+              <h3 data-i18n="zero.h">No API key (default)</h3>
+              <div class="body">
+                <p class="hint" data-i18n="zero.hint"></p>
+                <div class="actions" style="margin-top:0"><button type="button" class="btn solid" id="btn-copy-prompt" data-i18n="btn.copyprompt">① Copy prompt</button><button type="button" class="btn small" id="btn-show-prompt" data-i18n="btn.showprompt">View prompt</button></div>
+                <div class="field" style="margin-top:12px"><label for="paste" data-i18n="zero.paste">② Paste the model's reply</label><textarea id="paste" placeholder='{"version":"review-output-v2", ...}' spellcheck="false"></textarea></div>
+                <div class="actions" style="margin-top:0"><button type="button" class="btn solid" id="btn-parse" data-i18n="btn.parse">③ Parse and show</button></div>
+                <div class="status-line" id="status-b" role="status"></div>
+              </div>
+            </div>
+          </div>
+
+          <details class="adv" id="adv">
+            <summary data-i18n="adv.h">Advanced: use your own API key</summary>
+            <div class="mode on" id="mode-a" style="margin-top:10px">
+              <div class="body">
+                <div class="field"><label for="provider" data-i18n="adv.provider">Provider</label><select id="provider"></select><div class="sub" id="provider-note"></div></div>
+                <div class="field" id="base-field" hidden><label for="base" data-i18n="adv.base">Endpoint</label><input type="url" id="base" placeholder="https://example.com/v1" autocomplete="off"></div>
+                <div class="field"><label for="key" data-i18n="adv.key">Your API key</label><input type="password" id="key" autocomplete="off" spellcheck="false" data-i18n-ph="adv.key.ph"><div class="sub"><label style="display:inline-flex;gap:6px;align-items:center;margin:4px 0 0"><input type="checkbox" id="remember"> <span data-i18n="adv.remember"></span></label></div></div>
+                <div class="field"><label for="model" data-i18n="adv.model">Model name</label><input type="text" id="model" list="model-list" autocomplete="off" spellcheck="false"><datalist id="model-list"></datalist><div class="sub" data-i18n-html="adv.model.sub"></div></div>
+                <div class="actions" style="margin-top:6px"><button type="button" class="btn solid" id="btn-run" data-i18n="btn.run">Start review</button></div>
+                <div class="status-line" id="status-a" role="status"></div>
+              </div>
+            </div>
+            <details style="margin-top:12px;font-size:14px;color:var(--ink-2)"><summary style="cursor:pointer" data-i18n="adv.tested">Direct-call test (2026-11-05)</summary>
+              <p style="margin:8px 0 0" data-i18n="adv.tested.d"></p>
+            </details>
+          </details>
+
+          <p class="offline"><span data-i18n="offline">Offline version.</span> <a href="open/review-offline.html" download><u data-i18n="offline.link">Download review-offline.html</u></a></p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="result" id="result">
+      <hr class="rule strong" style="margin:40px 0 28px">
+      <div class="sec-head">
+        <h2 id="res-title">Result</h2>
+        <span class="en" id="res-meta"></span>
+        <p class="lede" id="res-summary"></p>
+      </div>
+      <div class="banner" id="res-banner"></div>
+      <div class="res-head">
+        <div id="res-hex"></div>
+        <div>
+          <dl class="kv">
+            <dt data-i18n="res.overall">Overall (reference)</dt><dd id="res-overall"></dd>
+            <dt data-i18n="res.weakest">Weakest key premise</dt><dd id="res-weakest"></dd>
+            <dt data-i18n="res.gates">Gates</dt><dd id="res-gates"></dd>
+            <dt data-i18n="res.fit" id="res-fit-dt" hidden>Where it fits</dt><dd id="res-fit" hidden></dd>
+          </dl>
+        </div>
+      </div>
+      <div class="res-grid">
+        <div>
+          <div class="res-block"><h3 data-i18n="res.axes">Six dimensions</h3><p class="muted" id="res-outlook" hidden style="font-size:13px;margin:0 0 4px"></p><ul class="res-axes" id="res-axes"></ul></div>
+          <div class="res-block"><h3 data-i18n="res.premises">Key premises</h3><ul class="res-list" id="res-premises"></ul></div>
+        </div>
+        <div>
+          <div class="res-block"><h3 data-i18n="res.next">What to prove next</h3><ul class="res-list" id="res-next"></ul></div>
+          <div class="res-block"><h3 data-i18n="res.requests">Material to add</h3><ul class="res-list" id="res-requests"></ul></div>
+          <div class="res-block"><h3 data-i18n="res.questions">Three questions</h3><ul class="res-list" id="res-questions"></ul></div>
+          <div class="res-block"><h3 data-i18n="res.caveats">Where the model is unsure</h3><ul class="res-list" id="res-caveats"></ul></div>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:24px">
+        <button type="button" class="btn solid" id="btn-export-md" data-i18n="btn.copymd">Copy Markdown</button>
+        <button type="button" class="btn" id="btn-dl-md" data-i18n="btn.dlmd">Download .md</button>
+        <button type="button" class="btn" id="btn-dl-json" data-i18n="btn.dljson">Download JSON</button>
+        <button type="button" class="btn small" id="btn-raw" data-i18n="btn.raw">View raw output</button>
+      </div>
+      <div class="status-line" id="status-r" role="status"></div>
+      <pre class="pre" id="raw" hidden></pre>
+      <p class="muted" id="res-invite" hidden data-i18n="res.invite" style="font-size:13px;margin:20px 0 0">Want a human view? Send this review to the contact on the SEAL Growth home page. Entirely optional: nothing leaves this page unless you send it.</p>
+    </div>
+
+    <pre class="pre" id="prompt-view" hidden style="margin-top:24px"></pre>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="legal"><span data-i18n="foot">SEAL Growth invests no cash and charges no fees.</span> <span class="ver">V0.5</span> · <a href="index.html" data-home="" data-i18n="foot.home">Home</a> · <a href="#top" data-i18n="foot.top">Back to top</a></p>
+  </div>
+</footer>
+
+<script src="assets/review.js" defer></script>
+</body>
+</html>

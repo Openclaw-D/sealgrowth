@@ -1,0 +1,834 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://openclaw-d.github.io/sealgrowth/open/review-output.schema.json",
+ "title": "SEAL Growth review output / 海豹增长评审输出 (review-output-v1 | review-output-v2)",
+ "description": "JSON the review tool asks the model for. v2 (2026-11-10): adds template (startup|personal), optional fit/fit_reason for startup, dimensions identified by key; length limits are generous maximums because v2 can be English or Chinese (the prompt sets the tighter word or character limits). v1 (startup, Chinese) is still accepted. From 2026-11-11, v2 axes may carry optional outlook (holds|at_risk|unknown|na) and outlook_reason; they never change a tier. Method: METHOD-V3.md + METHOD-V3-addendum-2026-11-10.md; prompt: prompt-v2.md. 新字段均为可选或新版本专有，向后兼容 v1。",
+ "oneOf": [
+  {
+   "$ref": "#/$defs/v1"
+  },
+  {
+   "$ref": "#/$defs/v2_startup"
+  },
+  {
+   "$ref": "#/$defs/v2_personal"
+  }
+ ],
+ "$defs": {
+  "v1": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "version",
+    "summary",
+    "axes",
+    "premises",
+    "gates",
+    "next_steps",
+    "requests",
+    "questions",
+    "caveats"
+   ],
+   "properties": {
+    "version": {
+     "const": "review-output-v1"
+    },
+    "summary": {
+     "type": "string",
+     "maxLength": 60,
+     "description": "一句话定位与阶段"
+    },
+    "axes": {
+     "type": "array",
+     "minItems": 6,
+     "maxItems": 6,
+     "items": false,
+     "prefixItems": [
+      {
+       "$ref": "#/$defs/axis",
+       "properties": {
+        "name": {
+         "const": "市场需求"
+        }
+       }
+      },
+      {
+       "$ref": "#/$defs/axis",
+       "properties": {
+        "name": {
+         "const": "商业模式"
+        }
+       }
+      },
+      {
+       "$ref": "#/$defs/axis",
+       "properties": {
+        "name": {
+         "const": "资本效率"
+        }
+       }
+      },
+      {
+       "$ref": "#/$defs/axis",
+       "properties": {
+        "name": {
+         "const": "竞争壁垒"
+        }
+       }
+      },
+      {
+       "$ref": "#/$defs/axis",
+       "properties": {
+        "name": {
+         "const": "执行能力"
+        }
+       }
+      },
+      {
+       "$ref": "#/$defs/axis",
+       "properties": {
+        "name": {
+         "const": "投资回报"
+        }
+       }
+      }
+     ]
+    },
+    "premises": {
+     "type": "array",
+     "minItems": 2,
+     "maxItems": 5,
+     "items": {
+      "$ref": "#/$defs/v1_premise"
+     },
+     "contains": {
+      "type": "object",
+      "properties": {
+       "critical": {
+        "const": true
+       }
+      },
+      "required": [
+       "critical"
+      ]
+     },
+     "minContains": 1
+    },
+    "gates": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "fraud",
+      "tech",
+      "cash",
+      "integrity",
+      "note"
+     ],
+     "properties": {
+      "fraud": {
+       "$ref": "#/$defs/gate_state"
+      },
+      "tech": {
+       "$ref": "#/$defs/gate_state"
+      },
+      "cash": {
+       "$ref": "#/$defs/gate_state"
+      },
+      "integrity": {
+       "$ref": "#/$defs/gate_state"
+      },
+      "note": {
+       "type": "string",
+       "maxLength": 200
+      }
+     }
+    },
+    "next_steps": {
+     "type": "array",
+     "minItems": 3,
+     "maxItems": 5,
+     "items": {
+      "$ref": "#/$defs/v1_next_step"
+     },
+     "description": "先便宜后贵"
+    },
+    "requests": {
+     "type": "array",
+     "maxItems": 8,
+     "items": {
+      "type": "string",
+      "maxLength": 30
+     }
+    },
+    "questions": {
+     "type": "array",
+     "minItems": 3,
+     "maxItems": 3,
+     "items": {
+      "$ref": "#/$defs/v1_question"
+     }
+    },
+    "caveats": {
+     "type": "array",
+     "minItems": 1,
+     "maxItems": 5,
+     "items": {
+      "type": "string",
+      "maxLength": 60
+     }
+    }
+   },
+   "description": "review-output-v1 (startup only; dimensions identified by Chinese name). 网页工具 V1 的输出，仍被接受。"
+  },
+  "v2_startup": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "version",
+    "template",
+    "summary",
+    "axes",
+    "premises",
+    "gates",
+    "next_steps",
+    "requests",
+    "questions",
+    "caveats"
+   ],
+   "description": "review-output-v2, startup template. fit and fit_reason are optional.",
+   "properties": {
+    "version": {
+     "const": "review-output-v2"
+    },
+    "template": {
+     "const": "startup"
+    },
+    "fit": {
+     "enum": [
+      "focus",
+      "recommended",
+      "other"
+     ]
+    },
+    "fit_reason": {
+     "type": "string",
+     "maxLength": 120
+    },
+    "axes": {
+     "type": "array",
+     "minItems": 6,
+     "maxItems": 6,
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "key",
+       "suggested",
+       "agree",
+       "reason",
+       "public_reason",
+       "next",
+       "missing"
+      ],
+      "properties": {
+       "key": {
+        "enum": [
+         "market",
+         "model",
+         "capital",
+         "moat",
+         "execution",
+         "return"
+        ]
+       },
+       "suggested": {
+        "$ref": "#/$defs/tier"
+       },
+       "agree": {
+        "type": [
+         "boolean",
+         "null"
+        ]
+       },
+       "reason": {
+        "type": "string",
+        "maxLength": 400
+       },
+       "public_reason": {
+        "type": "string",
+        "maxLength": 120
+       },
+       "next": {
+        "type": "string",
+        "maxLength": 240
+       },
+       "missing": {
+        "type": "string",
+        "maxLength": 160
+       },
+       "outlook": {
+        "enum": [
+         "holds",
+         "at_risk",
+         "unknown",
+         "na"
+        ]
+       },
+       "outlook_reason": {
+        "type": "string",
+        "maxLength": 400
+       }
+      },
+      "if": {
+       "properties": {
+        "suggested": {
+         "enum": [
+          "unknown",
+          "weak"
+         ]
+        }
+       }
+      },
+      "then": {
+       "properties": {
+        "next": {
+         "minLength": 1
+        }
+       }
+      }
+     },
+     "description": "Fixed order: market, model, capital, moat, execution, return"
+    },
+    "gates": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "fraud",
+      "tech",
+      "cash",
+      "integrity",
+      "note"
+     ],
+     "properties": {
+      "fraud": {
+       "$ref": "#/$defs/gate_state"
+      },
+      "tech": {
+       "$ref": "#/$defs/gate_state"
+      },
+      "cash": {
+       "$ref": "#/$defs/gate_state"
+      },
+      "integrity": {
+       "$ref": "#/$defs/gate_state"
+      },
+      "note": {
+       "type": "string",
+       "maxLength": 600
+      }
+     }
+    },
+    "summary": {
+     "type": "string",
+     "maxLength": 240
+    },
+    "premises": {
+     "type": "array",
+     "minItems": 2,
+     "maxItems": 5,
+     "items": {
+      "$ref": "#/$defs/premise"
+     },
+     "contains": {
+      "type": "object",
+      "properties": {
+       "critical": {
+        "const": true
+       }
+      },
+      "required": [
+       "critical"
+      ]
+     },
+     "minContains": 1
+    },
+    "next_steps": {
+     "type": "array",
+     "minItems": 3,
+     "maxItems": 5,
+     "items": {
+      "$ref": "#/$defs/next_step"
+     },
+     "description": "先便宜后贵"
+    },
+    "requests": {
+     "type": "array",
+     "maxItems": 8,
+     "items": {
+      "type": "string",
+      "maxLength": 120
+     }
+    },
+    "questions": {
+     "type": "array",
+     "minItems": 3,
+     "maxItems": 3,
+     "items": {
+      "$ref": "#/$defs/question"
+     }
+    },
+    "caveats": {
+     "type": "array",
+     "minItems": 1,
+     "maxItems": 5,
+     "items": {
+      "type": "string",
+      "maxLength": 240
+     }
+    }
+   }
+  },
+  "v2_personal": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "version",
+    "template",
+    "summary",
+    "axes",
+    "premises",
+    "gates",
+    "next_steps",
+    "requests",
+    "questions",
+    "caveats"
+   ],
+   "description": "review-output-v2, personal template. One gate: health.",
+   "properties": {
+    "version": {
+     "const": "review-output-v2"
+    },
+    "template": {
+     "const": "personal"
+    },
+    "axes": {
+     "type": "array",
+     "minItems": 6,
+     "maxItems": 6,
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "key",
+       "suggested",
+       "agree",
+       "reason",
+       "public_reason",
+       "next",
+       "missing"
+      ],
+      "properties": {
+       "key": {
+        "enum": [
+         "health",
+         "wealth",
+         "creation",
+         "relationships",
+         "reputation",
+         "position"
+        ]
+       },
+       "suggested": {
+        "$ref": "#/$defs/tier"
+       },
+       "agree": {
+        "type": [
+         "boolean",
+         "null"
+        ]
+       },
+       "reason": {
+        "type": "string",
+        "maxLength": 400
+       },
+       "public_reason": {
+        "type": "string",
+        "maxLength": 120
+       },
+       "next": {
+        "type": "string",
+        "maxLength": 240
+       },
+       "missing": {
+        "type": "string",
+        "maxLength": 160
+       },
+       "outlook": {
+        "enum": [
+         "holds",
+         "at_risk",
+         "unknown",
+         "na"
+        ]
+       },
+       "outlook_reason": {
+        "type": "string",
+        "maxLength": 400
+       }
+      },
+      "if": {
+       "properties": {
+        "suggested": {
+         "enum": [
+          "unknown",
+          "weak"
+         ]
+        }
+       }
+      },
+      "then": {
+       "properties": {
+        "next": {
+         "minLength": 1
+        }
+       }
+      }
+     },
+     "description": "Fixed order: health, wealth, creation, relationships, reputation, position"
+    },
+    "gates": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "health",
+      "note"
+     ],
+     "properties": {
+      "health": {
+       "$ref": "#/$defs/gate_state"
+      },
+      "note": {
+       "type": "string",
+       "maxLength": 600
+      }
+     }
+    },
+    "summary": {
+     "type": "string",
+     "maxLength": 240
+    },
+    "premises": {
+     "type": "array",
+     "minItems": 2,
+     "maxItems": 5,
+     "items": {
+      "$ref": "#/$defs/premise"
+     },
+     "contains": {
+      "type": "object",
+      "properties": {
+       "critical": {
+        "const": true
+       }
+      },
+      "required": [
+       "critical"
+      ]
+     },
+     "minContains": 1
+    },
+    "next_steps": {
+     "type": "array",
+     "minItems": 3,
+     "maxItems": 5,
+     "items": {
+      "$ref": "#/$defs/next_step"
+     },
+     "description": "先便宜后贵"
+    },
+    "requests": {
+     "type": "array",
+     "maxItems": 8,
+     "items": {
+      "type": "string",
+      "maxLength": 120
+     }
+    },
+    "questions": {
+     "type": "array",
+     "minItems": 3,
+     "maxItems": 3,
+     "items": {
+      "$ref": "#/$defs/question"
+     }
+    },
+    "caveats": {
+     "type": "array",
+     "minItems": 1,
+     "maxItems": 5,
+     "items": {
+      "type": "string",
+      "maxLength": 240
+     }
+    }
+   }
+  },
+  "tier": {
+   "enum": [
+    "unknown",
+    "weak",
+    "normal",
+    "strong",
+    "na"
+   ]
+  },
+  "gate_state": {
+   "enum": [
+    "unchecked",
+    "pass",
+    "block"
+   ]
+  },
+  "axis": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "name",
+    "suggested",
+    "agree",
+    "reason",
+    "public_reason",
+    "next",
+    "missing"
+   ],
+   "properties": {
+    "name": {
+     "enum": [
+      "市场需求",
+      "商业模式",
+      "资本效率",
+      "竞争壁垒",
+      "执行能力",
+      "投资回报"
+     ]
+    },
+    "suggested": {
+     "$ref": "#/$defs/tier",
+     "description": "模型的归档建议；填表人已选档位时仍须填写"
+    },
+    "agree": {
+     "type": [
+      "boolean",
+      "null"
+     ],
+     "description": "填表人已选档位：是否同意；未选：null"
+    },
+    "reason": {
+     "type": "string",
+     "maxLength": 100
+    },
+    "public_reason": {
+     "type": "string",
+     "maxLength": 24,
+     "description": "给创始人看的一句理由"
+    },
+    "next": {
+     "type": "string",
+     "maxLength": 60,
+     "description": "下一步要证明什么；弱点与未知必填，其余可为空字符串"
+    },
+    "missing": {
+     "type": "string",
+     "maxLength": 40
+    }
+   },
+   "if": {
+    "properties": {
+     "suggested": {
+      "enum": [
+       "unknown",
+       "weak"
+      ]
+     }
+    }
+   },
+   "then": {
+    "properties": {
+     "next": {
+      "minLength": 1
+     }
+    }
+   }
+  },
+  "v1_premise": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "text",
+    "status",
+    "critical",
+    "why"
+   ],
+   "properties": {
+    "text": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 40
+    },
+    "status": {
+     "enum": [
+      "verified",
+      "partial",
+      "unverified",
+      "false"
+     ]
+    },
+    "critical": {
+     "type": "boolean"
+    },
+    "why": {
+     "type": "string",
+     "maxLength": 60
+    }
+   }
+  },
+  "v1_next_step": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "text",
+    "verify",
+    "by",
+    "pass"
+   ],
+   "properties": {
+    "text": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 60
+    },
+    "verify": {
+     "type": "string",
+     "maxLength": 22
+    },
+    "by": {
+     "type": "string",
+     "maxLength": 6
+    },
+    "pass": {
+     "type": "string",
+     "maxLength": 12
+    }
+   }
+  },
+  "v1_question": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "q",
+    "good",
+    "red"
+   ],
+   "properties": {
+    "q": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 60
+    },
+    "good": {
+     "type": "string",
+     "maxLength": 40
+    },
+    "red": {
+     "type": "string",
+     "maxLength": 40
+    }
+   }
+  },
+  "premise": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "text",
+    "status",
+    "critical",
+    "why"
+   ],
+   "properties": {
+    "text": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 160
+    },
+    "status": {
+     "enum": [
+      "verified",
+      "partial",
+      "unverified",
+      "false"
+     ]
+    },
+    "critical": {
+     "type": "boolean"
+    },
+    "why": {
+     "type": "string",
+     "maxLength": 240
+    }
+   }
+  },
+  "next_step": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "text",
+    "verify",
+    "by",
+    "pass"
+   ],
+   "properties": {
+    "text": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 240
+    },
+    "verify": {
+     "type": "string",
+     "maxLength": 120
+    },
+    "by": {
+     "type": "string",
+     "maxLength": 40
+    },
+    "pass": {
+     "type": "string",
+     "maxLength": 80
+    }
+   }
+  },
+  "question": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "q",
+    "good",
+    "red"
+   ],
+   "properties": {
+    "q": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 240
+    },
+    "good": {
+     "type": "string",
+     "maxLength": 160
+    },
+    "red": {
+     "type": "string",
+     "maxLength": 160
+    }
+   }
+  }
+ }
+}
