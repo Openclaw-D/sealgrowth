@@ -230,7 +230,7 @@
   /* ---------- interface text ---------- */
   var I18N = {
     en: {
-      'title': 'Review tool · SEAL Growth',
+      'title': 'Review tool · SEAL GROWTH',
       'nav.home': 'Home', 'nav.method': 'Method', 'nav.cases': 'Cases', 'nav.tool': 'Tool', 'nav.contact': 'Contact', 'nav.lang': '中文', 'nav.lang.aria': 'Switch to Chinese',
       'head.h1': 'Run the same method with your own model',
       'head.lede': 'Paste your text or fill in a short sheet, copy the prompt into your own chat model, then paste its answer back. You get six tiers, key premises, gates and what to prove next, by the open method.',
@@ -238,7 +238,7 @@
       'head.input': 'Input', 'head.input.d': 'Goes only to the chat product you paste into, or the provider you pick.',
       'head.code': 'Code', 'head.code.d': 'All logic is in <code>assets/review.js</code>, open source.',
       'tpl.label': 'Template', 'tpl.startup': 'Startup', 'tpl.personal': 'Personal',
-      'banner.startup': 'AI-assisted self-review. Not independently verified, not endorsed by SEAL Growth, not investment advice, no promise of funding or returns. Use a code name; leave out contact details, contracts and customer lists.',
+      'banner.startup': 'AI-assisted self-review. Not independently verified, not endorsed by SEAL GROWTH, not investment advice, no promise of funding or returns. Use a code name; leave out contact details, contracts and customer lists.',
       'banner.personal': 'AI-assisted self-review. Not independently verified; not medical, career or investment advice. Use a code name; leave out contact details and anything about other people.',
       'h.ctx': '1. Context', 'hint.ctx.startup': 'Sets what to check and where the bar is; it does not change the method.', 'hint.ctx.personal': 'A few facts about where you stand now.',
       'h.deck': '2. Paste your text', 'hint.deck.startup': 'Optional. The model treats it as the founder\'s own claims.', 'hint.deck.personal': 'Optional. The model treats it as your own claims.',
@@ -258,12 +258,12 @@
       'offline': 'Offline version: one HTML file you can open from your own disk.', 'offline.link': 'Download review-offline.html',
       'res.title': 'Result', 'res.overall': 'Overall (reference)', 'res.weakest': 'Weakest key premise', 'res.gates': 'Gates', 'res.fit': 'Where it fits',
       'res.axes': 'Six dimensions', 'res.premises': 'Key premises', 'res.next': 'What to prove next', 'res.requests.startup': 'Material to add', 'res.requests.personal': 'Evidence to collect', 'res.questions.startup': 'Three questions for the meeting', 'res.questions.personal': 'Three questions to ask yourself', 'res.caveats': 'Where the model is unsure',
-      'res.outlook': 'Outlook: SEAL Growth\'s forecast for {d}, not a fact. It never changes a tier.',
-      'res.invite': 'Want a human view? Send this review to the contact on the SEAL Growth home page. Entirely optional: nothing leaves this page unless you send it.',
-      'res.banner.startup': 'AI-assisted self-review · not independently verified · not endorsed by SEAL Growth · not investment advice · no promise of funding or returns. You decide the final tiers; the model only suggests and lists gaps.',
+      'res.outlook': 'Outlook: SEAL GROWTH\'s forecast for {d}, not a fact. It never changes a tier.',
+      'res.invite': 'Want a human view? Send this review to the contact on the SEAL GROWTH home page. Entirely optional: nothing leaves this page unless you send it.',
+      'res.banner.startup': 'AI-assisted self-review · not independently verified · not endorsed by SEAL GROWTH · not investment advice · no promise of funding or returns. You decide the final tiers; the model only suggests and lists gaps.',
       'res.banner.personal': 'AI-assisted self-review · not independently verified · not medical, career or investment advice. You decide the final tiers; the model only suggests and lists gaps.',
       'btn.copymd': 'Copy Markdown', 'btn.dlmd': 'Download .md', 'btn.dljson': 'Download JSON', 'btn.raw': 'View raw output',
-      'foot': 'SEAL Growth invests no cash and charges no fees; it promises no returns and does not publicly solicit investors. This tool is provided as is; its output is an AI-assisted self-review, not independently verified, and not investment advice. Your key and input never touch this site. Docs CC BY-SA 4.0 · Code Apache-2.0 ·',
+      'foot': 'SEAL GROWTH invests no cash and charges no fees; it promises no returns and does not publicly solicit investors. This tool is provided as is; its output is an AI-assisted self-review, not independently verified, and not investment advice. Your key and input never touch this site. Docs CC BY-SA 4.0 · Code Apache-2.0 ·',
       'foot.home': 'Home', 'foot.top': 'Back to top',
       'unnamed': 'Untitled', 'none': 'None', 'unset': '(blank)', 'notchosen': 'not chosen',
       'next': 'Next', 'missing': 'Missing', 'agree': 'Model agrees', 'disagree': 'Model disagrees, suggests', 'suggested': 'Model suggestion', 'key': 'key',
@@ -280,7 +280,7 @@
       'src.zero': 'No-key mode · pasted by hand'
     },
     zh: {
-      'title': '评审工具 · 海豹增长 SEAL Growth',
+      'title': '评审工具 · 海豹增长 SEAL GROWTH',
       'nav.home': '首页', 'nav.method': '方法', 'nav.cases': '案例', 'nav.tool': '工具', 'nav.contact': '联系', 'nav.lang': 'EN', 'nav.lang.aria': '切换到英文',
       'head.h1': '用你自己的模型，跑同一套方法',
       'head.lede': '贴一段文字或填一张速查表，把提示词复制到你自己的对话模型里，再把回答贴回来。你会拿到六维归档建议、关键前提、关卡状态和"下一步要证明什么"，按开源方法。',
@@ -796,7 +796,7 @@
   }
   function reportMarkdown() {
     var X = LAST, s = X.sheet, o = X.out, T = tpl(), zh = LANG === 'zh', sep = zh ? '：' : ': ', lines = [];
-    lines.push('# ' + ((s.f || {}).name || t('unnamed')) + (zh ? ' · AI 辅助自评（海豹增长 V0.5）' : ' · AI-assisted self-review (SEAL Growth V0.5)'));
+    lines.push('# ' + ((s.f || {}).name || t('unnamed')) + (zh ? ' · AI 辅助自评（海豹增长 V0.5）' : ' · AI-assisted self-review (SEAL GROWTH V0.5)'));
     lines.push('', '> ' + t('res.banner'), '> ' + (zh ? '生成' : 'Generated') + sep + X.at.toLocaleString(zh ? 'zh-CN' : 'en-GB') + ' · ' + X.source + ' · ' + (zh ? 'V0.5 · 模板 ' : 'V0.5 · template ') + t('tpl.' + TPL), '');
     lines.push('**' + (zh ? '一句话' : 'In one line') + '**' + sep + (o.summary || t('none')), '');
     lines.push('**' + t('res.overall') + '**' + sep + tw(X.ref) + ' (' + (X.ref === 'hold' ? t('ref.hold') : X.ref === 'insufficient' ? t('ref.insufficient') : t('ref.mean')) + '; ' + t('ref.you') + ')');
