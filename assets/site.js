@@ -39,3 +39,30 @@
     window.addEventListener('hashchange', function () { followHash(true); });
   });
 })();
+
+document.addEventListener('DOMContentLoaded', function () {
+  const section = document.querySelector('.rec-case');
+  if (!section) return;
+  const chart = section.querySelector('svg');
+  chart.setAttribute('role','group');
+  const labels = Array.from(chart.querySelectorAll('text'));
+  let active = -1;
+  function select(i) {
+    active = active === i ? -1 : i;
+    labels.forEach((label,j) => label.setAttribute('aria-pressed', String(j === active)));
+    section.querySelectorAll('[data-rec-row]').forEach(row => {
+      const index = Number(row.dataset.recRow);
+      row.hidden = active < 0 ? ![0,1,3].includes(index) : index !== active;
+    });
+  }
+  labels.forEach((label,i) => {
+    label.setAttribute('role','button');
+    label.setAttribute('tabindex','0');
+    label.setAttribute('aria-pressed','false');
+    label.onclick = () => select(i);
+    chart.querySelectorAll('circle')[i].onclick = label.onclick;
+    label.onkeydown = event => {
+      if (event.key === 'Enter' || event.key === ' ') {event.preventDefault(); select(i);}
+    };
+  });
+});

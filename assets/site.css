@@ -376,3 +376,9 @@ html.has-story .story-toggle[hidden]{display:none}
 html.story-off .mode-switch,html.story-off .switch-row{display:none!important}
 
 @media(max-width:719px){.score-cases .overall-line{display:block;white-space:nowrap}}
+
+.rec-case{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr);gap:2vw;margin:2rem 0}
+.rec-case aside{border-top:1px solid #aaa}.rec-case aside div{border-top:1px solid #ddd;padding:.8rem 0}.rec-case p{margin:.4rem 0;font-size:.94rem}
+.rec-chart{text-align:center;align-self:center}.rec-chart svg{width:100%;height:auto}.rec-chart [role=button]{cursor:pointer}.rec-chart [aria-pressed=true]{text-decoration:underline}.rec-case aside div{animation:rec-in .2s ease-out}@keyframes rec-in{from{opacity:.3}to{opacity:1}}
+@media(max-width:700px){.rec-case{grid-template-columns:1fr 1fr}.rec-chart{grid-column:1/-1;grid-row:1}}
+@media(prefers-reduced-motion:reduce){.rec-case aside div{animation:none}}
