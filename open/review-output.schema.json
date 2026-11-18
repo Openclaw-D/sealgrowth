@@ -1,7 +1,7 @@
 {
  "$schema": "https://json-schema.org/draft/2020-12/schema",
  "$id": "https://openclaw-d.github.io/sealgrowth/open/review-output.schema.json",
- "title": "SEAL Growth review output / 海豹增长评审输出 (review-output-v1 | review-output-v2)",
+ "title": "SEAL LAB review output / SEAL LAB评审输出 (review-output-v1 | review-output-v2)",
  "description": "JSON the review tool asks the model for. v2 (2026-11-10): adds template (startup|personal), optional fit/fit_reason for startup, dimensions identified by key; length limits are generous maximums because v2 can be English or Chinese (the prompt sets the tighter word or character limits). v1 (startup, Chinese) is still accepted. From 2026-11-11, v2 axes may carry optional outlook (holds|at_risk|unknown|na) and outlook_reason; they never change a tier. Method: METHOD-V3.md + METHOD-V3-addendum-2026-11-10.md; prompt: prompt-v2.md. 新字段均为可选或新版本专有，向后兼容 v1。",
  "oneOf": [
   {

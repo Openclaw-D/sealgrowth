@@ -1,0 +1,19 @@
+.lab{--wrap:1120px}
+.lab .nav .wrap{height:60px}
+.lab main>section{border-bottom:1px solid var(--line);padding-block:clamp(36px,5vw,70px)}
+.lab main>.lab-intro{padding-block:clamp(52px,7vw,104px)}
+.lab-intro .wrap,.lab-grid{display:grid;gap:clamp(24px,5vw,84px);align-items:start}
+.lab-intro h1{font-size:clamp(2.5rem,5vw,5rem);line-height:1.04;letter-spacing:-.045em;max-width:14em;text-wrap:balance}
+.lab-intro p{margin:1.4rem 0 0;max-width:59ch;font-size:clamp(1.05rem,1.65vw,1.35rem)}
+.lab-intro img{width:clamp(125px,16vw,210px);align-self:center;justify-self:center}
+.lab-grid h2{font-size:clamp(1.45rem,2.5vw,2.25rem);line-height:1.15;letter-spacing:-.025em}
+.lab-grid p,.lab-grid dd{margin:0;max-width:66ch}
+.lab-grid header p:last-child{margin-top:1rem}
+.lab-status{color:var(--ink-2);font-size:.85rem;margin-bottom:.6rem!important}
+.lab-facts{margin:0}.lab-facts>div{padding:.85rem 0;border-top:1px solid var(--line)}
+.lab-facts dt{font-weight:650}.lab-facts dd{color:var(--ink-2);margin-top:.2rem}
+.lab-links{padding-top:.85rem}.lab-links a,.lab address a{text-decoration:underline;text-underline-offset:.2em}
+.lab address{font-style:normal}
+@media(min-width:700px){.lab-intro .wrap{grid-template-columns:minmax(0,3fr) minmax(0,1fr)}.lab-grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}}
+@media(max-width:699px){.lab-intro img{display:none}.lab .nav ul{gap:10px}}
+@media print{.lab .nav nav{display:none}.lab section{break-inside:avoid}.lab main>section{padding:16px 0}}

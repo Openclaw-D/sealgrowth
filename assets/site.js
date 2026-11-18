@@ -1,4 +1,4 @@
-/* SEAL Growth · homepage mode switch (Startup / Personal) and language links. Apache-2.0.
+/* SEAL LAB · homepage mode switch (Startup / Personal) and language links. Apache-2.0.
    Loaded synchronously in <head> so the mode is set before first paint. Without JavaScript the page shows Startup. */
 (function () {
   'use strict';

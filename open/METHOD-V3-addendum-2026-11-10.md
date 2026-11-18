@@ -1,4 +1,4 @@
-# SEAL Growth review method V3 · Addendum 2026-11-10 / 海豹增长评审方法 V3 · 补充件（2026-11-10）
+# SEAL LAB review method V3 · Addendum 2026-11-10 / SEAL LAB评审方法 V3 · 补充件（2026-11-10）
 
 **License / 许可** CC BY-SA 4.0 · **Applies to / 适用于** METHOD-V3.md (unchanged / 原文不动) · **Prompt / 提示词** prompt-v2.md · **Output / 输出** review-output.schema.json (review-output-v2)
 
@@ -36,7 +36,7 @@ review-output-v2 adds `template` (`startup` or `personal`) and, for startups, th
 
 ### 6. Outlook check (added 2026-11-11)
 
-Base date: 11 November 2027. SEAL Growth's forecast, not a fact, to be revisited in later versions:
+Base date: 11 November 2027. SEAL LAB's forecast, not a fact, to be revisited in later versions:
 
 - software is worth less: features that need a team today come with a general model;
 - hardware costs less, so devices are cheaper to build and to copy;
@@ -83,7 +83,7 @@ review-output-v2 增加 `template`（`startup` 或 `personal`），初创模板�
 
 ### 6. 前瞻检查（2026-11-11 增补）
 
-基准日：2027 年 11 月 11 日。以下是海豹增长的预判，不是事实，日后版本会回看：
+基准日：2027 年 11 月 11 日。以下是SEAL LAB的预判，不是事实，日后版本会回看：
 
 - 软件贬值：今天要一个团队做的功能，到时通用模型直接给；
 - 硬件成本下降：同样的设备更便宜，也更容易被仿制；
