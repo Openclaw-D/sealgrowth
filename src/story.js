@@ -1,4 +1,4 @@
-/* SEAL Growth homepage story. Copyright 2026 SEAL Growth. Licensed under the Apache License, Version 2.0.
+/* SEAL LAB homepage story. Copyright 2026 SEAL LAB. Licensed under the Apache License, Version 2.0.
  * Scroll-driven canvas: one pup -> grows through six rings -> many seals gather -> landing -> lights around the globe.
  * Decoration only: the seals and the lit points are a picture of an idea. They are not real projects, places or counts.
  * Land mask: Natural Earth 1:110m (public domain), geographic continents rasterised to 1 degree by work/build-landmask.cjs.

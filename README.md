@@ -1,18 +1,21 @@
-# SEAL Growth 海豹增长 · Website and open review method
+# SEAL LAB · Edge AI Research & Development
 
-**EN** — SEAL Growth is a growth accelerator for people who build with AI: free, no cash invested, no cohort, no fees. It connects founders with capital; founders who want to may grant advisory equity, capped at 1% and disclosed to all parties. This repository holds the whole public site, the review method, the prompts, the schemas and fully synthetic samples. Nothing here is investment advice or career advice. Material founders give us is never published.
+SEAL LAB adapts small models to real hardware and measures accuracy, latency, memory and power on the target device. The proposed first experiment is offline keyword recognition. Our aim is to publish reproducible code, firmware and procedures wherever possible. SEAL LAB welcomes non-equity sponsorship, declines investment and retains control of research and publication.
 
-**中文** —— 海豹增长是为用 AI 创造的人而做的增长加速器：免费、不投现金、不设营期、不收费。我们连接创始人与资本；愿意的创始人可以授予顾问股，1% 封顶，并向各方披露。本仓库是官网全部内容：静态网站、评审方法、提示词、JSON Schema 和完全合成的样例。不构成投资建议，也不构成职业建议。项目方交给我们的材料永不公开；对外不以 VC 或基金身份出现，不公开募集资金，不承诺回报。
+SEAL LAB 从事端侧小模型后训练、硬件适配与设备实测。首项候选实验为离线关键词识别。我们尽可能开放代码、固件和实验方法，接受赞助，不接受投资，并独立决定研究方向和结果发布。
+
+The English homepage is `site/index.html`, with a Chinese version at `site/zh/index.html`. SEAL LAB growth advisory resources are available at `site/advisory.html` and `site/zh/advisory.html`. The review tool and its scoring method remain accessible below.
 
 ## 目录 / Layout
 
 | 路径 | 内容 | 许可 |
 |---|---|---|
 | `site/` | 静态网站，部署的就是这个目录：无构建步骤，无外部脚本、字体或统计 | 文案 CC BY-SA 4.0，代码 Apache-2.0 |
-| `site/index.html` | 英文首页（默认）。Startup / Personal 两种模式在同一页，默认 Startup | 同上 |
+| `site/index.html` | 英文研究首页（默认）。历史 Startup / Personal 入口在 advisory.html | 同上 |
 | `site/zh/index.html` | 中文首页，内容与英文逐段对应；两页互设 `hreflang` | 同上 |
 | `site/review.html` | 评审工具 V2：页内切换中英文，两套模板（初创 / 个人）；默认零接口，"自带密钥"折叠为进阶；每个维度定档后，另做一次不计分的前瞻检查（基准日 2027-11-11，不改变档位） | 同上 |
-| `site/assets/site.js` | 首页模式切换（`?mode=personal`、`#personal`、localStorage `seal-mode-v1`）与语言链接；无 JS 时显示 Startup | Apache-2.0 |
+| `site/assets/lab.js` | 研究首页语言链接与旧评审书签兼容 | Apache-2.0 |
+| `site/assets/site.js` | 评审档案模式切换（`?mode=personal`、`#personal`、localStorage `seal-mode-v1`）与语言链接；无 JS 时显示 Startup | Apache-2.0 |
 | `site/assets/review.js` | 评审工具全部逻辑：两套模板、提示词（`buildPrompt` 是唯一来源）、解析、六维图、导出 | Apache-2.0 |
 | `site/open/` | 方法 `METHOD-V3.md` 与补充件 `METHOD-V3-addendum-2026-11-10.md`；锚点 `anchors-v3.json`、`anchors-personal-v1.json`；个人模板 `personal-v1.md`；提示词 `prompt-v2.md`（`prompt-v1.md` 已被取代，仅存档）；`review-output.schema.json`（接受 v1 与 v2）、`v3-record.schema.json`；合成样例；离线版 `review-offline.html` | 见各文件 |
 | `tools/scoring-sheet/` | 本机打分表与创始人版 / 投资人版报告生成器。Python 3 标准库；PDF 需本机 Chrome。说明见其 [README](tools/scoring-sheet/README.md) | Apache-2.0 |
@@ -65,12 +68,12 @@ GitHub Pages 不能设响应头，所以两个首页和工具页在 `<head>` 里
 
 ## 不公开的东西
 
-真实项目材料、评审记录、评审人信息、联系人。仓库里出现的每一家公司都是虚构的合成样例，来源一律以"合成示例："开头。
+个案私有材料、评审记录和非公开联系人留在本地。评审工具使用虚构案例。研究首页可引用公开的开发板规格和厂商教程，拟开展的实验标明状态。
 
 ## 许可
 
-文档按 CC BY-SA 4.0（见 `LICENSE-DOCS`），代码按 Apache-2.0（见 `LICENSE-CODE`）。海豹图形与"海豹增长 / SEAL Growth"名称只用于标识本项目，不在许可范围内，请勿用于暗示背书。`tools/scoring-sheet/EquivalentUnifiedIdeograph-18.0.0.txt` 为 Unicode 数据文件，保留原始许可声明。
+文档按 CC BY-SA 4.0（见 `LICENSE-DOCS`），代码按 Apache-2.0（见 `LICENSE-CODE`）。海豹图形与 SEAL LAB、历史品牌标识只用于标识本项目，不在许可范围内，请勿用于暗示背书。`tools/scoring-sheet/EquivalentUnifiedIdeograph-18.0.0.txt` 为 Unicode 数据文件，保留原始许可声明。
 
-首页动画（`site/assets/story.js`）里的地球陆地点，来自 Natural Earth 1:110m 国家边界数据（公有领域，naturalearthdata.com），合并后按 2 度栅格化，不含国界和地名。动画里的海豹和亮点只是示意，不对应真实项目、地点或数量。可读源码在 `src/story.js`；`site/assets/story.js` 是去掉注释、缩短变量名后的发布版，两者行为相同。
+评审档案页动画（`site/assets/story.js`）里的地球陆地点，来自 Natural Earth 1:110m 国家边界数据（公有领域，naturalearthdata.com），合并后按 2 度栅格化，不含国界和地名。动画里的海豹和亮点只是示意，不对应真实项目、地点或数量。可读源码在 `src/story.js`；`site/assets/story.js` 是去掉注释、缩短变量名后的发布版，两者行为相同。
 
 `assets/tex` 里的纹理是生成的图像，处理成可平铺的细节图，没有使用第三方照片。

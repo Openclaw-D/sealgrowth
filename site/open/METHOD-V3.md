@@ -1,4 +1,4 @@
-# 海豹增长评审方法 V3（公开版）
+# SEAL LAB评审方法 V3（公开版）
 
 **版本** V3 · 2026-11-03 定稿，2026-11-04 补充创始人版写法，2026-11-05 发布网页版
 **许可** 本文 CC BY-SA 4.0；配套代码 Apache-2.0
@@ -128,7 +128,7 @@
 3. 填表人已选的档位不改，只写同意与否和理由；填表人没选的才给建议。
 4. 只输出 JSON，全部简体中文，遵守字数上限。
 
-工具的每份输出都标注："AI 辅助自评 · 未经独立核验 · 不代表海豹增长背书 · 不构成投资建议 · 不承诺融资或收益"。
+工具的每份输出都标注："AI 辅助自评 · 未经独立核验 · 不代表SEAL LAB背书 · 不构成投资建议 · 不承诺融资或收益"。
 
 ## 13. 文件
 
@@ -150,4 +150,10 @@
 
 ## 15. 声明
 
-本方法由海豹增长（SEAL Growth）编写并公开。海豹增长不提供资金，不收费，不以盈利为目的；不向任何人承诺回报，不公开募集资金；对外不以 VC 或基金身份出现。使用本方法得到的任何结论都不构成投资建议。项目方交给我们的材料不公开，也不会出现在任何示例里。
+SEAL LAB 公开本方法供增长咨询使用。实验室接受赞助，不接受投资，并独立决定测试与发布结论。项目方私有材料留在项目档案。
+
+## SEAL LAB · Growth advisory
+
+Assess moat using a comparable alternative under the same conditions. Easily reproduced model features offer limited evidence of defensibility. For integrated devices, ask how on-device measurements, device-specific data or calibration improve customer outcomes. For software, examine data rights, workflow integration or observed switching costs. Mark missing evidence unknown and assess research fit separately from the six commercial grades.
+
+评估壁垒时，要求同条件替代品对照。通用模型可直接复制的功能只有有限的壁垒证据。软硬一体项目要追问板端测量、设备独有数据或校准经验如何改善客户结果。纯软件项目可出示数据使用权、工作流集成或实际切换成本。缺少证据标为未知，项目方向匹配度单列，不直接改变六维档位。

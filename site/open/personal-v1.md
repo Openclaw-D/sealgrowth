@@ -8,7 +8,7 @@ One question: am I worth more in this era, measured in US dollars? Same rules as
 
 One gate, health: if the health gate is block, or the health dimension is weak, the overall is hold. Deal with health first.
 
-Outlook check: after each tier is chosen from today's evidence, each dimension also gets an `outlook` of holds, at_risk, unknown or na against SEAL Growth's dated forecast for 11 November 2027; it never changes a tier or the reference value.
+Outlook check: after each tier is chosen from today's evidence, each dimension also gets an `outlook` of holds, at_risk, unknown or na against SEAL LAB's dated forecast for 11 November 2027; it never changes a tier or the reference value.
 
 | Dimension | Key | Asks | weak | normal | strong |
 |---|---|---|---|---|---|
@@ -29,7 +29,7 @@ Not investment advice. Not career advice. Not medical advice.
 
 只有一个关卡：健康。健康关卡为阻断，或健康维度为弱点，综合为暂缓。先处理健康。
 
-前瞻检查：每个维度先按今天的证据定档，再对照海豹增长对 2027 年 11 月 11 日的预判给出 `outlook`（holds、at_risk、unknown 或 na），不改变档位，也不进参考值。
+前瞻检查：每个维度先按今天的证据定档，再对照SEAL LAB对 2027 年 11 月 11 日的预判给出 `outlook`（holds、at_risk、unknown 或 na），不改变档位，也不进参考值。
 
 | 维度 | 代码 | 问的是什么 | 弱点 | 正常 | 优秀 |
 |---|---|---|---|---|---|
